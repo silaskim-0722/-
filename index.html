@@ -1,9 +1,9 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="ko">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>허벌라이프 영양코치 플랫폼 - 건강한 삶을 위한 모든 것</title>
+    <title>Nutrition Insight+ | 프리미엄 웰니스 콘텐츠 플랫폼</title>
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 
@@ -12,13 +12,13 @@
     <link rel="icon" sizes="192x192" href="coachedu_favicon.png">
 
     <meta property="og:type" content="website">
-    <meta property="og:title" content="허벌라이프 영양코치 플랫폼 - 건강한 삶을 위한 모든 것">
-    <meta property="og:description" content="허벌라이프 영양코치와 함께하는 전문적인 제품 교육, 실용적인 건강 정보, 성공적인 고객 사례를 한 곳에서 만나보세요.">
+    <meta property="og:title" content="Nutrition Insight+">
+    <meta property="og:description" content="코치와 VIP 회원을 위한 프리미엄 웰니스 콘텐츠 플랫폼">
     <meta property="og:image" content="https://www.coach-edu.site/og-image.png">
     <meta property="og:url" content="https://www.coach-edu.site/">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="허벌라이프 영양코치 플랫폼 - 건강한 삶을 위한 모든 것">
-    <meta name="twitter:description" content="허벌라이프 영양코치와 함께하는 전문적인 제품 교육, 실용적인 건강 정보, 성공적인 고객 사례를 한 곳에서 만나보세요.">
+    <meta name="twitter:title" content="Nutrition Insight+">
+    <meta name="twitter:description" content="코치와 VIP 회원을 위한 프리미엄 웰니스 콘텐츠 플랫폼">
     <meta name="twitter:image" content="https://www.coach-edu.site/og-image.png">
     <style>
         * {
@@ -701,7 +701,7 @@
             box-shadow: 0 -2px 16px rgba(0,0,0,0.13);
             gap: 12px;
           }
-          #mobileEstimateBtn, #mobilePriceBtn {
+          #mobileEstimateBtn {
             background: #FFD600;
             color: #025937;
             font-size: 1.18rem;
@@ -712,11 +712,46 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.10);
             cursor: pointer;
           }
-          #mobileEstimateBtn:active, #mobilePriceBtn:active {
+          #mobileEstimateBtn:active {
             background: #008f45;
             color: #fff;
           }
         }
+
+        /* Nutrition Insight+ redesign layer: 기존 검색/로그인/로딩 로직 유지 */
+        :root{--ni-bg:#06130f;--ni-black:#0b2119;--ni-green:#0d5f45;--ni-mint:#bdf4dc;--ni-soft:#eefbf4;--ni-line:#dcebe3;--ni-ink:#10231d;--ni-muted:#6d7c75;}
+        body{background:linear-gradient(180deg,var(--ni-bg) 0%,#0a2119 58%,#f7fbf8 58%);color:var(--ni-ink);}
+        header{background:rgba(6,19,15,.92)!important;border-bottom:1px solid rgba(189,244,220,.16);box-shadow:0 12px 34px rgba(0,0,0,.22);}
+        .logo{color:#fff!important;line-height:1.05;gap:10px;text-decoration:none}.logo i{color:var(--ni-mint)!important}.logo-sub{display:block;font-size:.68rem;color:#bcebd5;font-weight:700;margin-top:4px;letter-spacing:-.01em}.nav-links a{color:#d9f3e7!important}.nav-links a:hover{color:var(--ni-mint)!important}.nav-login-btn,.mobile-login-btn{background:var(--ni-mint)!important;color:#062016!important;border-radius:999px!important;font-weight:900!important;box-shadow:0 8px 24px rgba(189,244,220,.18)}
+        .hero{min-height:540px;padding:150px 0 115px!important;text-align:left!important;background:linear-gradient(90deg,rgba(4,16,12,.96),rgba(6,30,21,.84) 45%,rgba(6,19,15,.35)),url('og-image.png') center/cover no-repeat;display:flex;align-items:center}.hero .container{max-width:1180px}.hero-kicker{color:var(--ni-mint);font-weight:900;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}.hero h1{font-size:clamp(2.35rem,6vw,4.8rem)!important;max-width:800px;line-height:1.05;text-shadow:none!important}.main-subtitle-mobile-fix{max-width:680px!important;text-align:left!important;font-size:clamp(1.1rem,2.5vw,1.55rem)!important;color:#e8fff3!important;font-weight:700!important}
+        #searchGuide{color:var(--ni-mint)!important;font-size:1rem!important;margin-bottom:12px!important}#searchInput{max-width:760px!important;height:64px;border-radius:22px!important;border:1px solid rgba(189,244,220,.55)!important;box-shadow:0 22px 60px rgba(4,28,20,.22);font-weight:800;color:var(--ni-ink)!important}.ni-chip-row{display:flex;gap:8px;overflow-x:auto;justify-content:center;margin:16px auto 0;max-width:920px;padding-bottom:4px}.ni-chip{white-space:nowrap;border:1px solid rgba(189,244,220,.55);background:rgba(255,255,255,.96);color:var(--ni-green);border-radius:999px;padding:9px 14px;font-weight:900;cursor:pointer}.ni-chip:hover,.ni-chip.active{background:var(--ni-green);color:#fff}
+        .container#videoResults{max-width:1180px!important}.video-slider-container{width:100%;display:flex;align-items:center;justify-content:center;gap:14px}.video-slider-track{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;width:min(1080px,100%)}.video-card{width:100%!important;height:auto!important;min-height:0!important;margin:0!important;border-radius:18px!important;background:#fff!important;border:1px solid var(--ni-line);overflow:hidden;box-shadow:0 12px 30px rgba(11,33,25,.10)!important;display:flex;flex-direction:column}.video-card:hover{transform:translateY(-3px) scale(1.01)!important;box-shadow:0 20px 44px rgba(11,33,25,.16)!important}.video-card .video-thumb{width:100%!important;height:auto!important;aspect-ratio:16/9;object-fit:cover!important;display:block}.video-card{position:relative}.privacy-badge{position:absolute;right:10px;top:10px;background:rgba(6,19,15,.78);color:#eafff2;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900;text-transform:uppercase;z-index:2}.video-info{padding:14px!important;flex:1}.video-title{font-size:1rem!important;font-weight:900!important;line-height:1.45!important;color:var(--ni-ink)!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.video-date{margin-top:6px;color:var(--ni-green);font-size:.78rem;font-weight:900}.video-desc{font-size:.84rem!important;color:var(--ni-muted)!important;line-height:1.55!important;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-top:8px}.video-tag{background:var(--ni-soft)!important;color:var(--ni-green)!important;border-radius:999px!important;padding:4px 7px!important;font-size:.7rem!important;font-weight:900}.video-actions{display:flex;gap:8px;padding:0 14px 14px}.video-btn,.video-btn-center,.copy-btn{flex:1;text-align:center;text-decoration:none;border:1px solid var(--ni-line)!important;background:#f9fdfb!important;color:#123329!important;border-radius:12px!important;padding:10px!important;font-size:.82rem!important;font-weight:900!important;position:static!important;transform:none!important}.video-btn:hover,.video-btn-center:hover,.copy-btn:hover{background:var(--ni-green)!important;color:#fff!important}.video-slider-arrow{background:var(--ni-black)!important;color:var(--ni-mint)!important;border:1px solid rgba(189,244,220,.2)!important;box-shadow:0 12px 26px rgba(0,0,0,.2)}.section-title{color:var(--ni-black)!important}.categories,.testimonials{background:#f7fbf8!important}.category-card{border:1px solid var(--ni-line);box-shadow:0 14px 34px rgba(11,33,25,.08)!important}.category-image{background:linear-gradient(135deg,var(--ni-black),var(--ni-green))!important}.category-content h3{color:var(--ni-black)!important}footer{background:var(--ni-bg)!important;color:#d3efe1!important}.footer-section h3{color:var(--ni-mint)!important}
+        @media(max-width:768px){.hero{min-height:430px;padding:118px 0 70px!important;text-align:center!important}.main-subtitle-mobile-fix{text-align:center!important;min-width:0!important}.nav-links{display:none}.video-slider-track{display:flex!important;width:100%!important}.video-card{max-width:none!important}.ni-chip-row{justify-content:flex-start}.video-slider-arrow{width:36px!important;height:36px!important}.logo-sub{display:none}}
+
+        /* Auth visibility: 로그인 전에는 브랜드와 로그인 카드만 노출 */
+        body:not(.is-logged-in){background:radial-gradient(circle at 15% 8%,rgba(189,244,220,.24),transparent 30%),linear-gradient(135deg,#04100c,#0b2a1f 62%,#102f24)!important;min-height:100vh;}
+        body:not(.is-logged-in) header{background:rgba(6,19,15,.96)!important;box-shadow:none!important;}
+        body:not(.is-logged-in) .nav-links,
+        body:not(.is-logged-in) .hero,
+        body:not(.is-logged-in) #searchGuide,
+        body:not(.is-logged-in) #searchInput,
+        body:not(.is-logged-in) #searchBtn,
+        body:not(.is-logged-in) #niCategoryChips,
+        body:not(.is-logged-in) #videoResults,
+        body:not(.is-logged-in) #products,
+        body:not(.is-logged-in) #cases,
+        body:not(.is-logged-in) footer,
+        body:not(.is-logged-in) #mobileEstimateBar,
+        body:not(.is-logged-in) #estimateModal{display:none!important;}
+        body:not(.is-logged-in) #loginModal{display:flex!important;position:relative!important;z-index:1!important;left:auto!important;top:auto!important;width:100%!important;height:auto!important;min-height:100vh!important;background:transparent!important;padding:118px 20px 42px!important;align-items:center!important;justify-content:center!important;}
+        body:not(.is-logged-in) #loginModal > div{max-width:460px!important;width:min(460px,100%)!important;border-radius:28px!important;padding:32px!important;box-shadow:0 24px 70px rgba(0,0,0,.28)!important;border:1px solid rgba(189,244,220,.38)!important;}
+        body:not(.is-logged-in) #closeModal{display:none!important;}
+        body:not(.is-logged-in) #loginTitle{color:var(--ni-green)!important;font-weight:900!important;}
+        body:not(.is-logged-in) #loginDesc::before{content:'Nutrition Insight+\A 코치와 VIP 회원을 위한 프리미엄 웰니스 콘텐츠 플랫폼\A';white-space:pre-line;display:block;color:#0b2119;font-size:1.05rem;font-weight:900;line-height:1.55;margin-bottom:10px;}
+        body:not(.is-logged-in) .nav-login-btn{display:inline-flex!important;}
+        body.is-logged-in .nav-links{display:flex;}
+        body.is-logged-in #mobileEstimateBar{display:none;}
+        @media(max-width:768px){body.is-logged-in #mobileEstimateBar{display:flex;}body:not(.is-logged-in) #loginModal{padding-top:96px!important}.nav-login-btn{display:none!important}}
     </style>
 </head>
 <body>
@@ -725,13 +760,13 @@
         <nav class="container" style="position:relative;">
             <a class="logo" href="https://www.coach-edu.site/">
                 <i class="fas fa-leaf"></i>
-                Live Your Best Life
+                Nutrition Insight+<span class="logo-sub">코치와 VIP 회원을 위한 프리미엄 웰니스 콘텐츠 플랫폼</span>
             </a>
             <ul class="nav-links">
                 <li><a href="https://www.coach-edu.site/">홈</a></li>
                 <li><a href="https://open.kakao.com/me/fitcouple" target="_blank">문의</a></li>
                 <li><a href="#" id="estimateBtn">제품견적</a></li>
-                <li><a href="product_price.pdf" target="_blank" id="priceListBtn">가격표</a></li>
+
             </ul>
             <button id="loginBtn" class="nav-login-btn">로그인</button>
             <button id="mobileLoginBtn" class="mobile-login-btn" style="display:none;">로그인</button>
@@ -797,10 +832,10 @@
     <!-- Hero Section -->
     <section id="home" class="hero">
         <div class="container">
-            <h1 class="fade-in-up">HL아카이브</h1>
+            <div class="hero-kicker fade-in-up">Premium Wellness Streaming</div><h1 class="fade-in-up">건강한 삶을 위한 웰니스 인사이트를 한곳에</h1>
             <div class="fade-in-up" style="margin-bottom:2rem; display:flex; justify-content:center;">
               <div class="main-subtitle-mobile-fix" style="font-size:2.1rem; line-height:1.5; font-weight:400; text-align:center; width:100%; max-width:540px; min-width:320px; background:none; border-radius:0; box-shadow:none; padding:0;">
-                웰니스코치들의 성장을 위한 All in One 동영상플랫폼
+                영상이 쌓이면 코치의 지식 자산이 됩니다.
               </div>
             </div>
         </div>
@@ -808,16 +843,16 @@
 
     <!-- 검색 안내 및 검색창 UI -->
     <div class="container" style="margin-top:-30px; margin-bottom:30px; text-align:center;">
-      <div id="searchGuide" style="color:#FFD600; font-size:1.08rem; font-weight:600; margin-bottom:0; padding-bottom:0; margin-top:0;">검색어를 입력해 주세요.</div>
+      <div id="searchGuide" style="color:#FFD600; font-size:1.08rem; font-weight:600; margin-bottom:0; padding-bottom:0; margin-top:0;">추천 콘텐츠를 둘러보거나 검색어를 입력해 주세요.</div>
       <div style="display:flex; justify-content:center; align-items:center; max-width:400px; margin:0 auto; margin-top:0; padding-top:0;">
         <div style="position:relative; width:100%; max-width:400px; margin-top:0; padding-top:0;">
-          <input id="searchInput" type="text" placeholder="영상 제목, 해시태그, 키워드로 검색..." style="width:100%; max-width:100%; padding:0.7rem 2.5rem 0.7rem 1.2rem; border-radius:30px; border:1px solid #bbb; font-size:1.1rem; margin-top:0;">
+          <input id="searchInput" type="text" placeholder="예: 아토피, 혈당, 쉐이크, 장건강, 갱년기, 다이어트 실패" style="width:100%; max-width:100%; padding:0.7rem 2.5rem 0.7rem 1.2rem; border-radius:30px; border:1px solid #bbb; font-size:1.1rem; margin-top:0;">
           <button id="searchBtn" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); background:transparent; border:none; padding:0; margin:0; cursor:pointer;">
             <i class="fas fa-search" style="color:#025937; font-size:1.3rem;"></i>
           </button>
         </div>
       </div>
-      <div style="margin-top:18px; color:#fff; font-size:1.08rem; font-family:'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', Arial, sans-serif; font-weight:300; letter-spacing:-0.01em;">실제 코치들의 경험과 노하우를 바로 활용할 수 있습니다. 신규코치는 입문부터, 베테랑 코치는 성장노하우까지 모든 자료가 한 곳에!</div>
+      <div class="ni-chip-row" id="niCategoryChips"><button class="ni-chip active" data-word="">전체</button><button class="ni-chip" data-word="다이어트">다이어트</button><button class="ni-chip" data-word="쉐이크">쉐이크</button><button class="ni-chip" data-word="알로에">알로에</button><button class="ni-chip" data-word="단백질">단백질</button><button class="ni-chip" data-word="장건강">장건강</button><button class="ni-chip" data-word="관절">관절</button><button class="ni-chip" data-word="피부">피부</button><button class="ni-chip" data-word="운동">운동</button><button class="ni-chip" data-word="코치교육">코치교육</button><button class="ni-chip" data-word="멤버가입">멤버가입</button></div>      <div style="margin-top:18px; color:#fff; font-size:1.08rem; font-family:'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', Arial, sans-serif; font-weight:300; letter-spacing:-0.01em;">코치와 VIP 회원을 위한 프리미엄 웰니스 콘텐츠를 빠르게 검색하고 바로 시청하세요.</div>
     </div>
     <!-- 검색 결과 영상 리스트 -->
     <div class="container" id="videoResults" style="display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; margin-bottom:60px;"></div>
@@ -828,7 +863,7 @@
     <!-- Content Categories -->
     <section id="products" class="categories">
         <div class="container">
-            <h2 class="section-title">콘텐츠 카테고리</h2>
+            <h2 class="section-title">추천 콘텐츠</h2>
             <div class="categories-grid">
                 <div class="category-card">
                     <div class="category-image">
@@ -987,7 +1022,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2016 허벌라이프 10년차 부부코치 핏커플TV 영상공유 플랫폼. All rights reserved.</p>
+                <p>&copy; Nutrition Insight+ · 프리미엄 웰니스 콘텐츠 플랫폼</p>
             </div>
         </div>
     </footer>
@@ -1010,10 +1045,11 @@
 
     <div id="mobileEstimateBar">
       <button id="mobileEstimateBtn">제품견적</button>
-      <button id="mobilePriceBtn">가격표</button>
+
     </div>
 
     <script>
+    // SECURITY WARNING: Airtable PAT/API Key가 브라우저 코드에 포함되어 있습니다. 공개 저장소에 올리면 위험합니다. 기존 운영 방식 유지 목적일 때만 사용하세요.
     // 유튜브 API 연동: 여러 재생목록의 영상 자동 불러오기
     const API_KEY = 'AIzaSyDyx75uISUhEE6kKPFArUFfYtF2pcWDfWU';
     const PLAYLIST_IDS = [
@@ -1045,7 +1081,9 @@
           description: item.snippet.description,
           tags: [], // 태그는 video API로 별도 조회 필요, 기본은 빈 배열
           url: `https://www.youtube.com/embed/${item.snippet.resourceId.videoId}`,
-          thumbnail: item.snippet.thumbnails.medium.url
+          thumbnail: item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium.url,
+          uploadDate: (item.snippet.publishedAt || '').slice(0, 10),
+          privacyStatus: 'public'
         }));
     }
 
@@ -1059,6 +1097,17 @@
     }
 
     // 로그인 상태 관리 함수
+    function applyAuthVisibility() {
+      const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
+      document.body.classList.toggle('is-logged-in', loggedIn);
+      document.body.classList.toggle('is-logged-out', !loggedIn);
+      if (!loggedIn) {
+        const results = document.getElementById('videoResults');
+        if (results) results.innerHTML = '';
+        const input = document.getElementById('searchInput');
+        if (input) input.value = '';
+      }
+    }
     function setLoginState(loggedIn) {
       if (loggedIn) {
         localStorage.setItem('isLoggedIn', 'true');
@@ -1067,11 +1116,13 @@
       }
       syncLoginBtnText();
       showMobileLoginBtn();
+      applyAuthVisibility();
     }
 
     // 페이지 로드 시 로그인 상태 반영
     window.onload = function() {
       syncLoginBtnText();
+      applyAuthVisibility();
     };
 
     // PC 검색 결과 렌더링 (기존 유지)
@@ -1108,6 +1159,8 @@
         keywords.every(word =>
           v.title.toLowerCase().includes(word) ||
           v.description.toLowerCase().includes(word) ||
+          (v.uploadDate || '').toLowerCase().includes(word) ||
+          (v.privacyStatus || '').toLowerCase().includes(word) ||
           v.tags.some(tag => tag.toLowerCase().includes(word))
         )
       );
@@ -1117,8 +1170,9 @@
         seen.add(v.id);
         return true;
       });
+      guide.textContent = `"${keyword}" 검색 결과 ${filtered.length}개`;
       if (filtered.length === 0) {
-        results.innerHTML = '<div style="color:#888; font-size:1.1rem;">검색 결과가 없습니다.</div>';
+        results.innerHTML = '<div style="color:#dcebe3; font-size:1.1rem;">검색 결과가 없습니다.</div>';
         return;
       }
       let sliderIndex = 0;
@@ -1191,6 +1245,8 @@
         keywords.every(word =>
           v.title.toLowerCase().includes(word) ||
           v.description.toLowerCase().includes(word) ||
+          (v.uploadDate || '').toLowerCase().includes(word) ||
+          (v.privacyStatus || '').toLowerCase().includes(word) ||
           v.tags.some(tag => tag.toLowerCase().includes(word))
         )
       );
@@ -1200,8 +1256,9 @@
         seen.add(v.id);
         return true;
       });
+      guide.textContent = `"${keyword}" 검색 결과 ${filtered.length}개`;
       if (filtered.length === 0) {
-        results.innerHTML = '<div style="color:#888; font-size:1.1rem;">검색 결과가 없습니다.</div>';
+        results.innerHTML = '<div style="color:#dcebe3; font-size:1.1rem;">검색 결과가 없습니다.</div>';
         return;
       }
       let sliderIndex = 0;
@@ -1306,6 +1363,77 @@
         observer.observe(el);
     });
 
+
+    function formatNiDate(value) {
+      if (!value) return '';
+      const d = new Date(value);
+      if (Number.isNaN(d.getTime())) return value;
+      return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
+    }
+    function copyVideoLink(e, url) {
+      e.preventDefault();
+      e.stopPropagation();
+      const done = () => alert('링크가 복사되었습니다.');
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done).catch(() => legacyCopyNi(url, done));
+      else legacyCopyNi(url, done);
+    }
+    function legacyCopyNi(text, done) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      ta.remove();
+      done();
+    }
+    function enhanceNiCards() {
+      document.querySelectorAll('.video-card').forEach(card => {
+        if (!card.querySelector('.privacy-badge')) {
+          const badge = document.createElement('span');
+          badge.className = 'privacy-badge';
+          badge.textContent = 'public';
+          card.appendChild(badge);
+        }
+        const btn = card.querySelector('.video-btn, .video-btn-center');
+        if (btn && !card.querySelector('.copy-btn')) {
+          const onclick = btn.getAttribute('onclick') || '';
+          const match = onclick.match(/'([^']+)'/);
+          const url = match ? match[1] : btn.href;
+          const found = (window.videos || videos || []).find(v => v.url === url);
+          const info = card.querySelector('.video-info');
+          if (info && found && !info.querySelector('.video-date')) {
+            const date = document.createElement('div');
+            date.className = 'video-date';
+            date.textContent = `${formatNiDate(found.uploadDate)} · ${found.privacyStatus || 'public'}`;
+            const title = info.querySelector('.video-title');
+            if (title) title.insertAdjacentElement('afterend', date);
+          }
+          const actions = document.createElement('div');
+          actions.className = 'video-actions';
+          btn.parentElement.insertBefore(actions, btn);
+          actions.appendChild(btn);
+          const copy = document.createElement('button');
+          copy.className = 'copy-btn';
+          copy.textContent = '링크 복사';
+          copy.onclick = e => copyVideoLink(e, url);
+          actions.appendChild(copy);
+        }
+      });
+    }
+    const niCardObserver = new MutationObserver(enhanceNiCards);
+    document.addEventListener('DOMContentLoaded', function() {
+      const results = document.getElementById('videoResults');
+      if (results) niCardObserver.observe(results, { childList: true, subtree: true });
+      document.querySelectorAll('.ni-chip').forEach(btn => {
+        btn.addEventListener('click', function() {
+          document.querySelectorAll('.ni-chip').forEach(b => b.classList.remove('active'));
+          this.classList.add('active');
+          const input = document.getElementById('searchInput');
+          input.value = this.dataset.word || '';
+          renderVideos(input.value);
+        });
+      });
+    });
     // PC/모바일 로그인 버튼 동기화
     function syncLoginBtnText() {
       var text = localStorage.getItem('isLoggedIn') === 'true' ? '로그아웃' : '로그인';
@@ -1325,7 +1453,7 @@
       syncLoginBtnText();
     }
     window.addEventListener('resize', showMobileLoginBtn);
-    window.addEventListener('DOMContentLoaded', showMobileLoginBtn);
+    window.addEventListener('DOMContentLoaded', function(){ showMobileLoginBtn(); applyAuthVisibility(); });
     // 로그아웃 시 입력값 초기화 함수
     function clearLoginInputs() {
       document.querySelectorAll('#loginModal input').forEach(input => input.value = '');
@@ -1930,6 +2058,10 @@
 
     estimateBtn.onclick = function(e) {
       e.preventDefault();
+      if (localStorage.getItem('isLoggedIn') !== 'true') {
+        document.getElementById('alertModal').style.display = 'flex';
+        return;
+      }
       estimateModal.style.display = 'flex';
       renderEstimateTable();
     };
@@ -1949,19 +2081,23 @@
       var mobileEstimateBtn = document.getElementById('mobileEstimateBtn');
       if (mobileEstimateBtn) {
         mobileEstimateBtn.onclick = function() {
+          if (localStorage.getItem('isLoggedIn') !== 'true') {
+            document.getElementById('alertModal').style.display = 'flex';
+            return;
+          }
           document.getElementById('estimateModal').style.display = 'flex';
           window.estimateQuantities = Array(productList.length).fill(1);
           renderEstimateTable();
         };
       }
-      var mobilePriceBtn = document.getElementById('mobilePriceBtn');
-      if (mobilePriceBtn) {
-        mobilePriceBtn.onclick = function() {
-          window.open('product_price.pdf', '_blank');
-        };
-      }
-    });
+});
     </script>
 </body>
 </html>
+
+
+
+
+
+
 
