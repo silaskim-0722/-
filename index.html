@@ -1144,31 +1144,62 @@ function renderBrowseFeed() {
   const cats = currentCat === 'all'
     ? Object.keys(SECTION_META)
     : [currentCat];
-  cats.forEach(cat => {
+  let rendered = 0;
+  cats.forEach((cat, idx) => {
     const list = videos.filter(v => v.category === cat);
     if (!list.length) return;
+    rendered++;
     const meta = SECTION_META[cat] || { label:cat, icon:'🎬' };
-    const rowId = 'row_' + cats.indexOf(cat);
+    const rowId = 'row_cat_' + idx;
+
+    // 섹션 전체를 DOM API로 생성 — innerHTML onclick 문제 완전 제거
     const sec = document.createElement('div');
     sec.className = 'video-section';
-    sec.innerHTML = `
-      <div class="section-header">
-        <div class="section-label">
-          <span>${meta.icon}</span> ${meta.label}
-        </div>
-        <span class="section-count">${list.length}개 영상</span>
-      </div>
-      <div class="card-row-outer">
-        <button class="row-arrow left" onclick="scrollRow('${rowId}',-1)"><i class="fas fa-chevron-left"></i></button>
-        <div class="card-row-scroll" id="${rowId}">
-          ${list.map(v => videoCardHTML(v)).join('')}
-        </div>
-        <button class="row-arrow right" onclick="scrollRow('${rowId}',1)"><i class="fas fa-chevron-right"></i></button>
-      </div>
-    `;
+
+    // 헤더
+    const header = document.createElement('div');
+    header.className = 'section-header';
+    header.innerHTML = `
+      <div class="section-label"><span>${meta.icon}</span> ${meta.label}</div>
+      <span class="section-count">${list.length}개 영상</span>`;
+    sec.appendChild(header);
+
+    // 카드 row 래퍼
+    const outer = document.createElement('div');
+    outer.className = 'card-row-outer';
+
+    // 왼쪽 화살표
+    const btnL = document.createElement('button');
+    btnL.className = 'row-arrow left';
+    btnL.innerHTML = '<i class="fas fa-chevron-left"></i>';
+    btnL.addEventListener('click', () => {
+      const el = document.getElementById(rowId);
+      if (el) el.scrollBy({ left: -900, behavior: 'smooth' });
+    });
+
+    // 스크롤 트랙
+    const track = document.createElement('div');
+    track.className = 'card-row-scroll';
+    track.id = rowId;
+    track.innerHTML = list.map(v => videoCardHTML(v)).join('');
+
+    // 오른쪽 화살표
+    const btnR = document.createElement('button');
+    btnR.className = 'row-arrow right';
+    btnR.innerHTML = '<i class="fas fa-chevron-right"></i>';
+    btnR.addEventListener('click', () => {
+      const el = document.getElementById(rowId);
+      if (el) el.scrollBy({ left: 900, behavior: 'smooth' });
+    });
+
+    outer.appendChild(btnL);
+    outer.appendChild(track);
+    outer.appendChild(btnR);
+    sec.appendChild(outer);
     container.appendChild(sec);
   });
-  if (!container.innerHTML) {
+
+  if (!rendered) {
     container.innerHTML = '<div class="empty-state"><i class="fas fa-film"></i><p>해당 카테고리 영상이 없습니다.</p></div>';
   }
 }
