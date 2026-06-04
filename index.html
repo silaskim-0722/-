@@ -675,6 +675,64 @@
     @media (max-width:420px) {
       .video-grid { grid-template-columns:1fr; }
     }
+
+    /* ==============================
+       VIDEO PLAYER MODAL
+    ============================== */
+    #videoPlayerModal {
+      position: fixed; inset: 0; z-index: 1100;
+      background: rgba(0,0,0,.88); backdrop-filter: blur(8px);
+      display: none; align-items: center; justify-content: center;
+      padding: 20px;
+    }
+    #videoPlayerModal.open { display: flex; }
+    .vp-box {
+      width: min(900px, 100%);
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 18px;
+      overflow: hidden;
+      box-shadow: 0 50px 100px rgba(0,0,0,.7);
+      animation: fadeUp .3s ease;
+    }
+    .vp-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 18px;
+      border-bottom: 1px solid var(--border);
+    }
+    .vp-title {
+      font-size: .95rem; font-weight: 700;
+      white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+      max-width: calc(100% - 48px);
+    }
+    .vp-close {
+      flex-shrink: 0; width: 34px; height: 34px; border-radius: 50%;
+      background: var(--surface2); color: var(--muted);
+      font-size: 1.1rem; display: flex; align-items: center; justify-content: center;
+      transition: all .2s; cursor: pointer;
+    }
+    .vp-close:hover { background: var(--danger); color: #fff; }
+    .vp-iframe-wrap {
+      position: relative; width: 100%; aspect-ratio: 16/9; background: #000;
+    }
+    .vp-iframe-wrap iframe {
+      position: absolute; inset: 0; width: 100%; height: 100%; border: none;
+    }
+    .vp-footer {
+      padding: 12px 18px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 10px;
+    }
+    .vp-yt-btn {
+      font-size: .82rem; font-weight: 700; color: var(--muted);
+      display: flex; align-items: center; gap: 6px;
+      transition: color .2s;
+    }
+    .vp-yt-btn:hover { color: #ff4444; }
+    @media (max-width: 768px) {
+      #videoPlayerModal { padding: 0; align-items: flex-end; }
+      .vp-box { border-radius: 18px 18px 0 0; width: 100%; }
+    }
   </style>
 </head>
 <body>
@@ -1326,17 +1384,45 @@ function cardCopy(el) {
   const card = el.closest('.video-card');
   copyLink(card.dataset.url);
 }
-// 실제로 영상 여는 함수 — 팝업 차단 방지: window.open 직접 호출
+// 실제로 영상 여는 함수 — 사이트 내 embed 플레이어
 function openVideo(url, title) {
+  // youtube.com/watch?v=ID → embed/ID 변환
+  let embedUrl = url;
+  const matchWatch = url.match(/[?&]v=([^&]+)/);
+  const matchShort = url.match(/youtu\.be\/([^?]+)/);
+  const matchEmbed = url.match(/embed\/([^?]+)/);
+  const videoId = (matchWatch && matchWatch[1]) ||
+                  (matchShort && matchShort[1]) ||
+                  (matchEmbed && matchEmbed[1]);
+  if (videoId) {
+    embedUrl = `https://www.youtube.com/embed/${videoId}?autoplay=1&rel=0`;
+  }
+  // 모달 열기
+  document.getElementById('vpTitle').textContent = title || '';
+  document.getElementById('vpIframe').src = embedUrl;
+  document.getElementById('vpYtLink').href = url;
+  document.getElementById('videoPlayerModal').classList.add('open');
+  document.body.style.overflow = 'hidden';
+  saveActivityLog('영상보기', title || '');
   watchingVideo = true;
   if (logoutTimer) clearTimeout(logoutTimer);
   if (warnTimer)   clearTimeout(warnTimer);
-  saveActivityLog('영상보기', title || '');
-  const win = window.open(url, '_blank');
-  const poll = setInterval(() => {
-    if (!win || win.closed) { clearInterval(poll); watchingVideo=false; resetLogoutTimer(); }
-  }, 1000);
 }
+function closeVideoPlayer() {
+  document.getElementById('videoPlayerModal').classList.remove('open');
+  document.getElementById('vpIframe').src = ''; // 재생 중단
+  document.body.style.overflow = '';
+  watchingVideo = false;
+  resetLogoutTimer();
+}
+// 모달 바깥 클릭 시 닫기
+document.getElementById('videoPlayerModal').addEventListener('click', function(e) {
+  if (e.target === this) closeVideoPlayer();
+});
+// ESC 키로 닫기
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeVideoPlayer();
+});
 
 let watchingVideo = false;
 function handleVideoClick(e, url, title='') {
@@ -1567,5 +1653,31 @@ window.addEventListener('DOMContentLoaded', () => {
   }
 });
 </script>
+
+<!-- VIDEO PLAYER MODAL -->
+<div id="videoPlayerModal">
+  <div class="vp-box">
+    <div class="vp-header">
+      <div class="vp-title" id="vpTitle"></div>
+      <button class="vp-close" onclick="closeVideoPlayer()">✕</button>
+    </div>
+    <div class="vp-iframe-wrap">
+      <iframe id="vpIframe"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+    </div>
+    <div class="vp-footer">
+      <span style="font-size:.8rem; color:var(--muted);">
+        <i class="fas fa-lock" style="color:var(--green);margin-right:4px"></i>
+        코치 전용 콘텐츠
+      </span>
+      <a id="vpYtLink" href="#" target="_blank" class="vp-yt-btn">
+        <i class="fab fa-youtube"></i> YouTube에서 보기
+      </a>
+    </div>
+  </div>
+</div>
+
 </body>
 </html>
