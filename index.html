@@ -1148,7 +1148,7 @@ function renderBrowseFeed() {
     const list = videos.filter(v => v.category === cat);
     if (!list.length) return;
     const meta = SECTION_META[cat] || { label:cat, icon:'🎬' };
-    const rowId = 'row_'+cat.replace(/[^a-z0-9]/gi,'_');
+    const rowId = 'row_' + cats.indexOf(cat);
     const sec = document.createElement('div');
     sec.className = 'video-section';
     sec.innerHTML = `
