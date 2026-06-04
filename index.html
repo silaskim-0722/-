@@ -1,2103 +1,1499 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nutrition Insight+ | 프리미엄 웰니스 콘텐츠 플랫폼</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Nutrition Insight+ | 코치 전용 웰니스 스트리밍</title>
+  <link rel="icon" href="coachedu_favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="coachedu_favicon.png">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Nutrition Insight+">
+  <meta property="og:description" content="허벌라이프 코치 전용 프리미엄 웰니스 콘텐츠 플랫폼">
+  <meta property="og:image" content="https://www.coach-edu.site/og-image.png">
+  <meta property="og:url" content="https://www.coach-edu.site/">
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Bebas+Neue&display=swap" rel="stylesheet">
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
 
-    <link rel="icon" href="coachedu_favicon.png" type="image/png">
-    <link rel="apple-touch-icon" href="coachedu_favicon.png">
-    <link rel="icon" sizes="192x192" href="coachedu_favicon.png">
+  <style>
+    /* ==============================
+       CSS VARIABLES & RESET
+    ============================== */
+    :root {
+      --bg:        #0a0e0c;
+      --bg2:       #111814;
+      --surface:   #161e1a;
+      --surface2:  #1d2823;
+      --border:    rgba(255,255,255,0.07);
+      --green:     #00d170;
+      --green-dim: #00a856;
+      --gold:      #f5c842;
+      --text:      #e8f5ef;
+      --muted:     #7a9488;
+      --danger:    #e05252;
+      --card-r:    14px;
+      --nav-h:     64px;
+      --font-body: 'Noto Sans KR', sans-serif;
+      --font-disp: 'Bebas Neue', 'Noto Sans KR', sans-serif;
+    }
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior:smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+    a { text-decoration:none; color:inherit; }
+    button { font-family: inherit; cursor:pointer; border:none; background:none; }
+    input, select { font-family: inherit; }
+    ::-webkit-scrollbar { width:6px; height:6px; }
+    ::-webkit-scrollbar-track { background:transparent; }
+    ::-webkit-scrollbar-thumb { background:var(--surface2); border-radius:99px; }
 
-    <meta property="og:type" content="website">
-    <meta property="og:title" content="Nutrition Insight+">
-    <meta property="og:description" content="코치와 VIP 회원을 위한 프리미엄 웰니스 콘텐츠 플랫폼">
-    <meta property="og:image" content="https://www.coach-edu.site/og-image.png">
-    <meta property="og:url" content="https://www.coach-edu.site/">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Nutrition Insight+">
-    <meta name="twitter:description" content="코치와 VIP 회원을 위한 프리미엄 웰니스 콘텐츠 플랫폼">
-    <meta name="twitter:image" content="https://www.coach-edu.site/og-image.png">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+    /* ==============================
+       ANIMATIONS
+    ============================== */
+    @keyframes fadeUp {
+      from { opacity:0; transform:translateY(22px); }
+      to   { opacity:1; transform:translateY(0); }
+    }
+    @keyframes shimmer {
+      0%   { background-position:-400px 0; }
+      100% { background-position:400px 0; }
+    }
+    @keyframes pulse {
+      0%,100% { opacity:1; }
+      50%      { opacity:.5; }
+    }
+    @keyframes spin {
+      to { transform:rotate(360deg); }
+    }
+    .fade-up { animation: fadeUp .5s ease both; }
+    .fade-up-2 { animation: fadeUp .5s .1s ease both; }
+    .fade-up-3 { animation: fadeUp .5s .2s ease both; }
 
-        body {
-            font-family: 'Noto Sans KR', sans-serif;
-            line-height: 1.6;
-            color: #025937;
-            background: #025937;
-            min-height: 100vh;
-        }
+    /* ==============================
+       TOP NAV
+    ============================== */
+    #topNav {
+      position: fixed; top:0; left:0; right:0; z-index:900;
+      height: var(--nav-h);
+      display: flex; align-items:center; justify-content:space-between;
+      padding: 0 32px;
+      background: linear-gradient(180deg, rgba(10,14,12,.98) 0%, rgba(10,14,12,.0) 100%);
+      transition: background .3s;
+    }
+    #topNav.scrolled {
+      background: rgba(10,14,12,.97);
+      border-bottom: 1px solid var(--border);
+    }
+    .nav-logo {
+      display:flex; align-items:center; gap:10px;
+      font-family: var(--font-disp);
+      font-size: 1.55rem; letter-spacing:.04em;
+      color: var(--green);
+    }
+    .nav-logo .logo-leaf { font-size:1.3rem; }
+    .nav-logo .logo-badge {
+      font-family: var(--font-body);
+      font-size: .62rem; font-weight:700;
+      background: var(--green); color:#05140d;
+      border-radius:4px; padding:2px 6px;
+      letter-spacing:.04em;
+    }
+    .nav-center {
+      display:flex; gap:28px; list-style:none;
+    }
+    .nav-center a {
+      font-size:.9rem; font-weight:500;
+      color: var(--muted); transition:color .2s;
+    }
+    .nav-center a:hover { color: var(--text); }
+    .nav-right { display:flex; align-items:center; gap:12px; }
+    #loginBtn {
+      padding: 8px 20px;
+      border-radius: 8px;
+      font-size: .88rem; font-weight:700;
+      background: var(--green); color:#05140d;
+      transition: all .2s;
+    }
+    #loginBtn:hover { background:#00f07e; transform:translateY(-1px); }
+    #loginBtn.logged-in {
+      background: var(--surface2); color:var(--text);
+      border:1px solid var(--border);
+    }
+    #estimateBtnNav {
+      padding:8px 16px; border-radius:8px;
+      font-size:.88rem; font-weight:700;
+      border:1px solid var(--green); color:var(--green);
+      transition: all .2s;
+    }
+    #estimateBtnNav:hover { background:rgba(0,209,112,.1); }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+    /* Mobile nav */
+    #mobileNav {
+      display:none; position:fixed; bottom:0; left:0; right:0; z-index:900;
+      background: rgba(13,18,15,.96);
+      border-top:1px solid var(--border);
+      padding:8px 0 12px;
+    }
+    .mobile-nav-inner {
+      display:flex; justify-content:space-around; align-items:center;
+    }
+    .mnav-item {
+      display:flex; flex-direction:column; align-items:center; gap:3px;
+      color:var(--muted); font-size:.68rem; font-weight:500;
+      transition:color .2s;
+    }
+    .mnav-item i { font-size:1.25rem; }
+    .mnav-item.active, .mnav-item:hover { color:var(--green); }
+    .mnav-estimate {
+      background: var(--gold); color:#1a1000;
+      border-radius:12px; padding:6px 14px;
+      font-weight:900; font-size:.8rem;
+    }
 
-        /* Header */
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            padding: 1rem 0;
-            position: fixed;
-            top: 0;
-            width: 100%;
-            z-index: 1000;
-            box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
-        }
+    /* ==============================
+       AUTH WALL  (비로그인 상태)
+    ============================== */
+    #authWall {
+      display:none;
+      position:fixed; inset:0; z-index:800;
+      background:
+        radial-gradient(ellipse at 20% 10%, rgba(0,209,112,.12), transparent 50%),
+        radial-gradient(ellipse at 80% 90%, rgba(0,80,40,.15), transparent 50%),
+        var(--bg);
+      align-items:center; justify-content:center;
+      flex-direction:column;
+      padding:20px;
+    }
+    #authWall .aw-logo {
+      font-family: var(--font-disp); font-size:2.4rem;
+      color:var(--green); letter-spacing:.05em; margin-bottom:6px;
+    }
+    #authWall .aw-sub {
+      font-size:.85rem; color:var(--muted); margin-bottom:40px; text-align:center;
+    }
+    .auth-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 36px 32px;
+      width: min(440px, 100%);
+      box-shadow: 0 40px 80px rgba(0,0,0,.5);
+    }
+    .auth-card h2 {
+      font-size:1.3rem; font-weight:900; margin-bottom:6px;
+    }
+    .auth-card .auth-desc {
+      font-size:.85rem; color:var(--muted); margin-bottom:28px;
+    }
+    .auth-tab-row {
+      display:flex; border-bottom:1px solid var(--border); margin-bottom:24px;
+    }
+    .auth-tab {
+      flex:1; padding:10px; text-align:center;
+      font-weight:700; font-size:.9rem; color:var(--muted);
+      border-bottom:2px solid transparent; margin-bottom:-1px;
+      transition:all .2s; cursor:pointer;
+    }
+    .auth-tab.active { color:var(--green); border-color:var(--green); }
+    .auth-pane { display:none; flex-direction:column; gap:12px; }
+    .auth-pane.active { display:flex; }
+    .auth-input {
+      width:100%; padding:13px 16px;
+      background: var(--surface2); border:1px solid var(--border);
+      border-radius:10px; color:var(--text); font-size:.93rem;
+      transition: border .2s;
+      outline:none;
+    }
+    .auth-input:focus { border-color:var(--green); }
+    .auth-input::placeholder { color:var(--muted); }
+    select.auth-input option { background:var(--surface2); }
+    .auth-submit {
+      width:100%; padding:14px;
+      background: var(--green); color:#04140a;
+      border-radius:10px; font-weight:900; font-size:.98rem;
+      transition:all .2s; margin-top:4px;
+    }
+    .auth-submit:hover { background:#00f07e; transform:translateY(-1px); }
+    .auth-err {
+      font-size:.82rem; color:var(--danger);
+      text-align:center; min-height:18px;
+    }
 
-        nav {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+    /* ==============================
+       MAIN CONTENT AREA
+    ============================== */
+    #mainContent {
+      display:none;
+      padding-top: var(--nav-h);
+    }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #025937;
-        }
+    /* ==============================
+       HERO BANNER
+    ============================== */
+    .hero-banner {
+      position:relative; min-height:520px;
+      background:
+        linear-gradient(to right, rgba(10,14,12,.98) 30%, rgba(10,14,12,.4) 100%),
+        linear-gradient(to top, var(--bg) 0%, transparent 40%),
+        url('og-image.png') center/cover no-repeat;
+      display:flex; align-items:flex-end;
+      padding: 0 40px 60px;
+    }
+    .hero-inner { max-width:580px; }
+    .hero-kicker {
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:.78rem; font-weight:900; letter-spacing:.12em;
+      text-transform:uppercase; color:var(--green);
+      border:1px solid rgba(0,209,112,.35); border-radius:99px;
+      padding:5px 14px; margin-bottom:18px;
+    }
+    .hero-kicker::before {
+      content:''; width:7px; height:7px; border-radius:50%;
+      background:var(--green); animation:pulse 1.8s infinite;
+    }
+    .hero-title {
+      font-family: var(--font-disp);
+      font-size: clamp(3rem, 6vw, 5.2rem);
+      line-height:.95; letter-spacing:.03em;
+      color:#fff; margin-bottom:16px;
+    }
+    .hero-title span { color:var(--green); }
+    .hero-sub {
+      font-size:1rem; color:rgba(255,255,255,.75);
+      line-height:1.6; margin-bottom:28px; max-width:460px;
+    }
+    .hero-actions { display:flex; gap:12px; flex-wrap:wrap; }
+    .hero-btn {
+      padding:12px 28px; border-radius:10px;
+      font-weight:700; font-size:.95rem; transition:all .2s;
+    }
+    .hero-btn-primary {
+      background:var(--green); color:#04140a;
+    }
+    .hero-btn-primary:hover { background:#00f07e; transform:translateY(-2px); }
+    .hero-btn-secondary {
+      border:1px solid rgba(255,255,255,.3); color:#fff;
+      background:rgba(255,255,255,.08);
+    }
+    .hero-btn-secondary:hover { background:rgba(255,255,255,.15); }
 
-        .logo i {
-            margin-right: 10px;
-            color: #00a651;
-        }
+    /* ==============================
+       SEARCH BAR
+    ============================== */
+    .search-section {
+      background: var(--bg2);
+      padding: 28px 40px;
+      border-bottom: 1px solid var(--border);
+    }
+    .search-wrap {
+      max-width:860px; margin:0 auto;
+      display:flex; flex-direction:column; gap:16px;
+    }
+    .search-input-row {
+      display:flex; gap:10px; align-items:center;
+    }
+    .search-box {
+      flex:1; position:relative;
+    }
+    .search-box i {
+      position:absolute; left:16px; top:50%; transform:translateY(-50%);
+      color:var(--muted); font-size:1.05rem;
+    }
+    #searchInput {
+      width:100%; height:52px; padding:0 52px 0 48px;
+      background:var(--surface); border:1.5px solid var(--border);
+      border-radius:12px; color:var(--text); font-size:.98rem; font-weight:500;
+      outline:none; transition:border .2s;
+    }
+    #searchInput:focus { border-color:var(--green); }
+    #searchInput::placeholder { color:var(--muted); }
+    #clearSearch {
+      position:absolute; right:14px; top:50%; transform:translateY(-50%);
+      color:var(--muted); font-size:1rem; display:none;
+    }
+    #clearSearch:hover { color:var(--text); }
+    #searchGuide {
+      font-size:.85rem; color:var(--muted); text-align:center;
+      min-height:20px; transition:color .2s;
+    }
+    .chip-row {
+      display:flex; gap:8px; flex-wrap:wrap;
+    }
+    .chip {
+      padding:7px 16px; border-radius:99px;
+      font-size:.82rem; font-weight:700;
+      background:var(--surface); border:1px solid var(--border);
+      color:var(--muted); cursor:pointer; transition:all .2s;
+      white-space:nowrap;
+    }
+    .chip:hover { color:var(--text); border-color:rgba(255,255,255,.2); }
+    .chip.active {
+      background:var(--green); color:#04140a; border-color:var(--green);
+    }
 
-        .nav-links {
-            display: flex;
-            list-style: none;
-            gap: 2rem;
-        }
+    /* ==============================
+       VIDEO ROWS (Netflix-style)
+    ============================== */
+    #mainFeed { padding:32px 0 120px; }
 
-        .nav-links a {
-            text-decoration: none;
-            color: #333;
-            font-weight: 500;
-            transition: color 0.3s ease;
-        }
+    .video-section { margin-bottom:48px; }
+    .section-header {
+      display:flex; align-items:center; justify-content:space-between;
+      padding:0 40px; margin-bottom:16px;
+    }
+    .section-label {
+      display:flex; align-items:center; gap:10px;
+      font-size:1.15rem; font-weight:900;
+    }
+    .section-label .label-icon {
+      width:30px; height:30px; border-radius:8px;
+      display:flex; align-items:center; justify-content:center;
+      font-size:.88rem; background:var(--surface2);
+    }
+    .section-count {
+      font-size:.78rem; color:var(--muted);
+      background:var(--surface2); border-radius:99px;
+      padding:3px 10px;
+    }
 
-        .nav-links a:hover {
-            color: #00a651;
-        }
+    /* Horizontal scroll row */
+    .card-row-outer { position:relative; }
+    .card-row-scroll {
+      display:flex; gap:16px;
+      overflow-x:auto; scroll-behavior:smooth;
+      padding:4px 40px 16px;
+      scrollbar-width:none;
+    }
+    .card-row-scroll::-webkit-scrollbar { display:none; }
 
-        .nav-login-btn {
-            background: #00a651;
-            color: #fff;
-            border: none;
-            border-radius: 20px;
-            padding: 7px 18px;
-            font-size: 1rem;
-            font-weight: 500;
-            margin-left: 1.5rem;
-            cursor: pointer;
-            z-index: 1100;
-        }
+    /* Arrow buttons */
+    .row-arrow {
+      position:absolute; top:50%; transform:translateY(-50%);
+      width:42px; height:42px; border-radius:50%;
+      background:rgba(10,14,12,.92); border:1px solid var(--border);
+      color:var(--text); font-size:1.1rem; z-index:10;
+      display:flex; align-items:center; justify-content:center;
+      transition:all .2s; cursor:pointer;
+    }
+    .row-arrow:hover { background:var(--surface2); border-color:var(--green); color:var(--green); }
+    .row-arrow.left  { left:6px; }
+    .row-arrow.right { right:6px; }
+    .row-arrow:disabled { opacity:.2; pointer-events:none; }
 
-        /* Hero Section */
-        .hero {
-            padding: 120px 0 80px;
-            text-align: center;
-            color: white;
-        }
+    /* VIDEO CARD */
+    .video-card {
+      flex-shrink:0; width:280px; border-radius:var(--card-r);
+      background:var(--surface); border:1px solid var(--border);
+      overflow:hidden; cursor:pointer;
+      transition:transform .25s, box-shadow .25s, border-color .25s;
+      position:relative;
+    }
+    .video-card:hover {
+      transform:translateY(-4px) scale(1.02);
+      box-shadow:0 24px 48px rgba(0,0,0,.5);
+      border-color:rgba(0,209,112,.3);
+    }
+    .video-card .thumb-wrap {
+      position:relative; aspect-ratio:16/9; overflow:hidden;
+    }
+    .video-card .thumb {
+      width:100%; height:100%; object-fit:cover;
+      transition:transform .3s;
+    }
+    .video-card:hover .thumb { transform:scale(1.05); }
+    .thumb-overlay {
+      position:absolute; inset:0;
+      background:linear-gradient(to top, rgba(10,14,12,.9) 0%, transparent 60%);
+      opacity:0; transition:opacity .25s;
+      display:flex; align-items:center; justify-content:center;
+    }
+    .video-card:hover .thumb-overlay { opacity:1; }
+    .play-btn {
+      width:48px; height:48px; border-radius:50%;
+      background:var(--green); color:#04140a; font-size:1.1rem;
+      display:flex; align-items:center; justify-content:center;
+      transform:scale(.8); transition:transform .2s;
+    }
+    .video-card:hover .play-btn { transform:scale(1); }
+    .card-body { padding:14px; }
+    .card-title {
+      font-size:.9rem; font-weight:700; line-height:1.4;
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+      overflow:hidden; margin-bottom:8px;
+    }
+    .card-meta {
+      display:flex; align-items:center; justify-content:space-between;
+      font-size:.76rem; color:var(--muted);
+    }
+    .card-date { font-weight:500; }
+    .card-desc {
+      font-size:.78rem; color:var(--muted); line-height:1.55;
+      margin-top:6px;
+      display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical;
+      overflow:hidden;
+    }
+    .card-tags { display:flex; gap:4px; flex-wrap:wrap; margin-top:8px; }
+    .card-tag {
+      font-size:.68rem; font-weight:700;
+      background:rgba(0,209,112,.1); color:var(--green);
+      border-radius:4px; padding:2px 7px;
+    }
+    .card-actions {
+      display:flex; gap:6px; padding:10px 14px 14px;
+      border-top:1px solid var(--border);
+    }
+    .card-btn {
+      flex:1; padding:8px; border-radius:8px; font-size:.78rem; font-weight:700;
+      text-align:center; transition:all .2s; border:1px solid var(--border);
+      color:var(--muted); background:transparent;
+    }
+    .card-btn.primary {
+      background:var(--green); color:#04140a; border-color:var(--green);
+    }
+    .card-btn.primary:hover { background:#00f07e; }
+    .card-btn:not(.primary):hover { background:var(--surface2); color:var(--text); }
 
-        .hero h1 {
-            font-size: 5.88rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
-        }
+    /* GRID VIEW (search results) */
+    .video-grid {
+      display:grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap:20px; padding:0 40px;
+    }
+    .video-grid .video-card { width:100%; }
 
-        .hero p {
-            font-size: 1.2rem;
-            margin-bottom: 2rem;
-            opacity: 0.9;
-        }
+    /* ==============================
+       CATEGORY CHIPS (section filter)
+    ============================== */
+    .cat-filter-row {
+      display:flex; gap:10px; padding:0 40px; margin-bottom:32px;
+      overflow-x:auto; scrollbar-width:none;
+    }
+    .cat-filter-row::-webkit-scrollbar { display:none; }
+    .cat-chip {
+      flex-shrink:0; padding:9px 20px; border-radius:10px;
+      font-size:.85rem; font-weight:700; cursor:pointer;
+      border:1px solid var(--border); color:var(--muted);
+      background:var(--surface); transition:all .2s;
+      display:flex; align-items:center; gap:7px;
+    }
+    .cat-chip .cat-icon { font-size:1rem; }
+    .cat-chip:hover { color:var(--text); border-color:rgba(255,255,255,.2); }
+    .cat-chip.active {
+      background:var(--surface2); color:var(--text);
+      border-color:var(--green); box-shadow:0 0 0 1px rgba(0,209,112,.3);
+    }
 
-        .cta-buttons {
-            display: flex;
-            gap: 1rem;
-            justify-content: center;
-            flex-wrap: wrap;
-        }
+    /* ==============================
+       LOADING SKELETON
+    ============================== */
+    .skeleton {
+      background: linear-gradient(90deg, var(--surface) 25%, var(--surface2) 50%, var(--surface) 75%);
+      background-size:400px 100%;
+      animation: shimmer 1.4s infinite;
+      border-radius:var(--card-r);
+    }
+    .skeleton-card {
+      flex-shrink:0; width:280px; height:220px; border-radius:var(--card-r);
+    }
 
-        .btn {
-            padding: 12px 30px;
-            border: none;
-            border-radius: 50px;
-            font-size: 1rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            text-decoration: none;
-            display: inline-block;
-        }
+    /* ==============================
+       MODALS
+    ============================== */
+    .modal-bg {
+      position:fixed; inset:0; z-index:1000;
+      background:rgba(0,0,0,.65); backdrop-filter:blur(6px);
+      display:none; align-items:center; justify-content:center; padding:20px;
+    }
+    .modal-bg.open { display:flex; }
+    .modal-box {
+      background:var(--surface); border:1px solid var(--border);
+      border-radius:20px; padding:32px; width:min(500px,100%);
+      max-height:90vh; overflow-y:auto;
+      box-shadow:0 50px 100px rgba(0,0,0,.6);
+      animation:fadeUp .3s ease;
+    }
+    .modal-header {
+      display:flex; align-items:center; justify-content:space-between;
+      margin-bottom:22px;
+    }
+    .modal-title { font-size:1.2rem; font-weight:900; }
+    .modal-close {
+      width:32px; height:32px; border-radius:50%;
+      background:var(--surface2); color:var(--muted); font-size:1.1rem;
+      display:flex; align-items:center; justify-content:center; transition:all .2s;
+    }
+    .modal-close:hover { background:var(--danger); color:#fff; }
 
-        .btn-primary {
-            background: #00a651;
-            color: white;
-        }
+    /* Estimate modal */
+    #estimateModal .modal-box { width:min(700px,100%); }
+    .estimate-table-wrap {
+      max-height:360px; overflow-y:auto;
+      border:1px solid var(--border); border-radius:10px;
+      margin-bottom:18px;
+    }
+    .estimate-table {
+      width:100%; border-collapse:collapse; font-size:.88rem;
+    }
+    .estimate-table th {
+      background:var(--surface2); color:var(--green);
+      padding:10px 12px; text-align:left;
+      position:sticky; top:0;
+      font-size:.8rem; font-weight:700;
+    }
+    .estimate-table td {
+      padding:9px 12px; border-bottom:1px solid var(--border);
+      color:var(--text);
+    }
+    .estimate-table tr:last-child td { border-bottom:none; }
+    .estimate-table input[type=number] {
+      width:52px; background:var(--surface2); border:1px solid var(--border);
+      border-radius:6px; color:var(--text); text-align:center;
+      padding:4px 6px; font-size:.85rem;
+    }
+    .estimate-total {
+      font-size:1.08rem; font-weight:900; color:var(--green);
+      text-align:right; padding:12px 0;
+    }
 
-        .btn-primary:hover {
-            background: #008f45;
-            transform: translateY(-2px);
-            box-shadow: 0 5px 15px rgba(0, 166, 81, 0.4);
-        }
+    /* Alert modal */
+    #alertModal .modal-box {
+      max-width:340px; text-align:center; padding:40px 28px;
+    }
+    .alert-icon { font-size:3rem; margin-bottom:14px; }
+    .alert-msg { font-weight:700; font-size:1.05rem; margin-bottom:24px; line-height:1.6; }
+    .alert-actions { display:flex; gap:10px; justify-content:center; }
+    .alert-btn {
+      padding:10px 24px; border-radius:10px;
+      font-weight:700; font-size:.9rem; transition:all .2s;
+    }
+    .alert-btn.primary { background:var(--green); color:#04140a; }
+    .alert-btn.secondary {
+      background:transparent; color:var(--text);
+      border:1px solid var(--border);
+    }
+    .alert-btn:hover { opacity:.85; transform:translateY(-1px); }
 
-        .btn-secondary {
-            background: rgba(255, 255, 255, 0.2);
-            color: white;
-            border: 2px solid white;
-        }
+    /* Toast */
+    #toast {
+      position:fixed; bottom:90px; left:50%; transform:translateX(-50%);
+      background:var(--surface2); border:1px solid var(--border);
+      border-radius:10px; padding:12px 22px;
+      font-size:.88rem; font-weight:600; color:var(--text);
+      z-index:2000; opacity:0; pointer-events:none;
+      transition:opacity .3s, bottom .3s;
+    }
+    #toast.show { opacity:1; bottom:100px; }
 
-        .btn-secondary:hover {
-            background: white;
-            color: #333;
-            transform: translateY(-2px);
-        }
+    /* Logout warning */
+    #logoutWarning {
+      position:fixed; bottom:80px; right:20px; z-index:2000;
+      background:var(--surface); border:1px solid var(--gold);
+      border-radius:14px; padding:18px 22px; max-width:280px;
+      box-shadow:0 20px 40px rgba(0,0,0,.5);
+      animation:fadeUp .3s ease;
+    }
+    .lw-msg { font-size:.88rem; font-weight:600; margin-bottom:12px; }
+    .lw-msg span { color:var(--gold); }
+    .lw-btn {
+      width:100%; padding:9px; border-radius:8px;
+      background:var(--gold); color:#1a1000;
+      font-weight:900; font-size:.85rem;
+    }
 
-        /* Features Section */
-        .features {
-            padding: 80px 0;
-            background: white;
-        }
+    /* ==============================
+       FOOTER
+    ============================== */
+    footer {
+      background:var(--bg2); border-top:1px solid var(--border);
+      padding:48px 40px 36px;
+    }
+    .footer-grid {
+      display:grid; grid-template-columns:repeat(auto-fit, minmax(180px,1fr));
+      gap:36px; max-width:1100px; margin:0 auto 32px;
+    }
+    .footer-col h4 {
+      font-size:.82rem; font-weight:900; letter-spacing:.1em;
+      text-transform:uppercase; color:var(--green); margin-bottom:14px;
+    }
+    .footer-col p, .footer-col a {
+      font-size:.84rem; color:var(--muted); line-height:1.8;
+      display:block; transition:color .2s;
+    }
+    .footer-col a:hover { color:var(--text); }
+    .footer-bottom {
+      border-top:1px solid var(--border); padding-top:20px;
+      font-size:.78rem; color:var(--muted); text-align:center;
+    }
 
-        .section-title {
-            text-align: center;
-            font-size: 2.5rem;
-            font-weight: 700;
-            margin-bottom: 3rem;
-            color: #025937;
-        }
+    /* ==============================
+       EMPTY / ERROR STATES
+    ============================== */
+    .empty-state {
+      text-align:center; padding:60px 40px; color:var(--muted);
+    }
+    .empty-state i { font-size:2.5rem; margin-bottom:14px; color:var(--surface2); }
+    .empty-state p { font-size:.95rem; }
 
-        .features-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
+    /* Search result count bar */
+    .result-bar {
+      padding:0 40px; margin-bottom:20px;
+      font-size:.88rem; color:var(--muted);
+    }
+    .result-bar strong { color:var(--green); font-weight:900; }
 
-        .feature-card {
-            background: white;
-            padding: 2rem;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-        }
-
-        .feature-icon {
-            width: 80px;
-            height: 80px;
-            background: linear-gradient(135deg, #00a651, #2c5aa0);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin: 0 auto 1.5rem;
-            color: white;
-            font-size: 2rem;
-        }
-
-        .feature-card h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #025937;
-        }
-
-        .feature-card p {
-            color: #666;
-            line-height: 1.6;
-        }
-
-        /* Content Categories */
-        .categories {
-            padding: 80px 0;
-            background: #f8f9fa;
-        }
-
-        .categories-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .category-card {
-            background: white;
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease;
-        }
-
-        .category-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .category-image {
-            height: 200px;
-            background: #025937;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 3rem;
-        }
-
-        .category-content {
-            padding: 2rem;
-        }
-
-        .category-content h3 {
-            font-size: 1.5rem;
-            font-weight: 600;
-            margin-bottom: 1rem;
-            color: #025937;
-        }
-
-        .category-content p {
-            color: #666;
-            margin-bottom: 1.5rem;
-        }
-
-        .category-stats {
-            display: flex;
-            justify-content: space-between;
-            color: #025937;
-            font-weight: 600;
-        }
-
-        /* Testimonials */
-        .testimonials {
-            padding: 80px 0;
-            background: white;
-        }
-
-        .testimonials-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-            gap: 2rem;
-            margin-top: 3rem;
-        }
-
-        .testimonial-card {
-            background: #f8f9fa;
-            padding: 2rem;
-            border-radius: 20px;
-            border-left: 5px solid #00a651;
-        }
-
-        .testimonial-text {
-            font-style: italic;
-            margin-bottom: 1.5rem;
-            color: #555;
-        }
-
-        .testimonial-author {
-            display: flex;
-            align-items: center;
-        }
-
-        .author-avatar {
-            width: 50px;
-            height: 50px;
-            border-radius: 50%;
-            background: #00a651;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-weight: 600;
-            margin-right: 1rem;
-        }
-
-        .author-info h4 {
-            color: #2c5aa0;
-            font-weight: 600;
-        }
-
-        .author-info p {
-            color: #666;
-            font-size: 0.9rem;
-        }
-
-        /* Footer */
-        footer {
-            background: #2c5aa0;
-            color: white;
-            padding: 3rem 0 1rem;
-        }
-
-        .footer-content {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-            margin-bottom: 2rem;
-        }
-
-        .footer-section h3 {
-            margin-bottom: 1rem;
-            color: #00a651;
-        }
-
-        .footer-section p, .footer-section a {
-            color: #ccc;
-            text-decoration: none;
-            line-height: 1.8;
-        }
-
-        .footer-section a:hover {
-            color: #00a651;
-        }
-
-        .social-links {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1rem;
-        }
-
-        .social-links a {
-            width: 40px;
-            height: 40px;
-            background: #00a651;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: background 0.3s ease;
-        }
-
-        .social-links a:hover {
-            background: #008f45;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 2rem;
-            border-top: 1px solid #025937;
-            color: #ccc;
-        }
-
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            .nav-links {
-                display: none;
-            }
-            .mobile-login-btn {
-                display: inline-block !important;
-            }
-            .nav-login-btn {
-                display: none !important;
-            }
-            .hero h1 {
-                font-size: 4.06rem;
-            }
-            .hero p {
-                font-size: 1rem;
-            }
-            .cta-buttons {
-                flex-direction: column;
-                align-items: center;
-            }
-            .btn {
-                width: 100%;
-                max-width: 300px;
-            }
-            .features-grid,
-            .testimonials-grid {
-                grid-template-columns: 1fr;
-            }
-            .categories-grid {
-                grid-template-columns: 1fr 1fr;
-                gap: 1rem;
-            }
-            .category-card {
-                max-width: 170px;
-                margin: 0 auto;
-                padding: 1rem 0.5rem;
-            }
-            .category-image {
-                height: 100px;
-                font-size: 2rem;
-            }
-            .category-content {
-                padding: 1rem 0.5rem;
-            }
-            #searchGuide {
-                margin-bottom: 0 !important;
-                padding-bottom: 0 !important;
-                font-size: 1.02rem;
-            }
-            #searchInput {
-                margin-top: 0 !important;
-            }
-            .container > div[style*='display:flex'] {
-                margin-top: 0 !important;
-                padding-top: 0 !important;
-            }
-            .video-slider-container {
-                position: relative;
-                max-width: 100vw;
-                padding: 0 0.5rem;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            .video-slider-arrow {
-                width: 44px;
-                height: 44px;
-                font-size: 2rem;
-                background: #FFD600 !important;
-                color: #025937 !important;
-                border: 2px solid #025937;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.18);
-                z-index: 10;
-                opacity: 0.97;
-                position: static;
-                margin: 0 4px;
-            }
-            .video-slider-arrow:disabled {
-                background: #eee !important;
-                color: #bbb !important;
-                border: 2px solid #eee;
-                opacity: 0.5;
-            }
-            .video-slider-track {
-                display: flex;
-                align-items: center;
-                justify-content: center;
-                width: 100vw;
-                min-width: 0;
-                gap: 0;
-            }
-            .video-card {
-                position: relative;
-                margin: 0 4px;
-            }
-            .video-btn-center {
-                position: absolute;
-                left: 50%;
-                bottom: 18px;
-                transform: translateX(-50%);
-                background: #FFD600;
-                color: #025937;
-                border-radius: 18px;
-                padding: 7px 18px;
-                font-size: 1.02rem;
-                font-weight: 700;
-                box-shadow: 0 2px 8px rgba(0,0,0,0.13);
-                border: 2px solid #025937;
-                z-index: 20;
-                opacity: 0.97;
-                min-width: 90px;
-                text-align: center;
-            }
-            .video-btn-center:active {
-                background: #ffe066;
-            }
-            .main-subtitle-mobile-fix {
-                font-size: 1.18rem !important;
-                letter-spacing: -0.01em;
-                white-space: nowrap;
-                overflow-x: auto;
-                text-overflow: ellipsis;
-                max-width: 98vw;
-                margin: 0 auto;
-            }
-        }
-
-        /* Animation */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .fade-in-up {
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        /* Video Result Card UX 개선 */
-        .video-card {
-            width: 340px;
-            height: 440px;
-            background: #fff;
-            border-radius: 18px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.08);
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            align-items: stretch;
-            margin-bottom: 1.5rem;
-            transition: transform 0.18s, box-shadow 0.18s;
-        }
-        .video-card:hover {
-            transform: translateY(-6px) scale(1.03);
-            box-shadow: 0 8px 32px rgba(0,0,0,0.13);
-        }
-        .video-thumb {
-            width: 100%;
-            height: 60%;
-            object-fit: cover;
-            border-radius: 18px 18px 0 0;
-            background: #eee;
-        }
-        .video-info {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: 1.1rem 1.2rem 0.5rem 1.2rem;
-        }
-        .video-title {
-            font-size: 1.15rem;
-            font-weight: 700;
-            margin: 0.7rem 0 0.3rem 0;
-            color: #025937;
-            white-space: normal;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-        }
-        .video-desc {
-            font-size: 0.98rem;
-            color: #025937;
-            margin-bottom: 0.7rem;
-            min-height: 2.6em;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            display: -webkit-box;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-        }
-        .video-tags {
-            margin-bottom: 0.7rem;
-        }
-        .video-tag {
-            background: #e6f4ea;
-            color: #025937;
-            border-radius: 12px;
-            padding: 2px 10px;
-            margin-right: 5px;
-            font-size: 0.92rem;
-        }
-        .video-btn {
-            display: block;
-            background: #025937;
-            color: #fff;
-            border-radius: 8px;
-            padding: 9px 0;
-            text-decoration: none;
-            font-weight: 500;
-            font-size: 1.08rem;
-            width: 90%;
-            margin: 0 auto 1rem auto;
-            text-align: center;
-            transition: background 0.2s;
-        }
-        .video-btn:hover {
-            background: #008f45;
-        }
-        @media (max-width: 768px) {
-            .video-card {
-                width: 98vw;
-                max-width: 340px;
-                height: 340px;
-            }
-            .video-thumb {
-                height: 56%;
-            }
-        }
-        /* 검색 결과 슬라이더 */
-        .video-slider-container {
-            position: relative;
-            width: 100%;
-            max-width: 1200px;
-            margin: 0 auto 60px auto;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .video-slider-arrow {
-            position: absolute;
-            top: 50%;
-            transform: translateY(-50%);
-            background: #fff;
-            color: #025937;
-            border: none;
-            border-radius: 50%;
-            width: 44px;
-            height: 44px;
-            font-size: 2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.13);
-            cursor: pointer;
-            z-index: 2;
-            transition: background 0.2s, color 0.2s;
-        }
-        .video-slider-arrow:disabled {
-            background: #eee;
-            color: #bbb;
-            cursor: default;
-        }
-        .video-slider-arrow.left { left: -56px; }
-        .video-slider-arrow.right { right: -56px; }
-        .video-slider-track {
-            display: flex;
-            gap: 2rem;
-            overflow: hidden;
-            width: 1080px;
-            min-height: 440px;
-            transition: transform 0.3s cubic-bezier(.4,1.3,.5,1);
-        }
-        @media (max-width: 1200px) {
-            .video-slider-track { width: 98vw; min-width: 0; }
-        }
-        @media (max-width: 900px) {
-            .video-slider-track { width: 98vw; min-width: 0; }
-            .video-slider-arrow.left { left: 0; }
-            .video-slider-arrow.right { right: 0; }
-        }
-        @media (max-width: 768px) {
-            .video-slider-track { width: 98vw; min-width: 0; }
-            .video-card { width: 98vw; max-width: 340px; height: 340px; }
-            .video-slider-arrow { width: 36px; height: 36px; font-size: 1.5rem; }
-        }
-        #mobileEstimateBar {
-          display: none;
-        }
-        @media (max-width: 768px) {
-          #mobileEstimateBar {
-            display: flex;
-            position: fixed;
-            left: 0; right: 0; bottom: 0;
-            width: 100vw;
-            background: #025937;
-            z-index: 5000;
-            justify-content: center;
-            align-items: center;
-            padding: 0.7rem 0 0.6rem 0;
-            box-shadow: 0 -2px 16px rgba(0,0,0,0.13);
-            gap: 12px;
-          }
-          #mobileEstimateBtn {
-            background: #FFD600;
-            color: #025937;
-            font-size: 1.18rem;
-            font-weight: 700;
-            border: none;
-            border-radius: 18px;
-            padding: 0.7rem 2.2rem;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.10);
-            cursor: pointer;
-          }
-          #mobileEstimateBtn:active {
-            background: #008f45;
-            color: #fff;
-          }
-        }
-
-        /* Nutrition Insight+ redesign layer: 기존 검색/로그인/로딩 로직 유지 */
-        :root{--ni-bg:#06130f;--ni-black:#0b2119;--ni-green:#0d5f45;--ni-mint:#bdf4dc;--ni-soft:#eefbf4;--ni-line:#dcebe3;--ni-ink:#10231d;--ni-muted:#6d7c75;}
-        body{background:linear-gradient(180deg,var(--ni-bg) 0%,#0a2119 58%,#f7fbf8 58%);color:var(--ni-ink);}
-        header{background:rgba(6,19,15,.92)!important;border-bottom:1px solid rgba(189,244,220,.16);box-shadow:0 12px 34px rgba(0,0,0,.22);}
-        .logo{color:#fff!important;line-height:1.05;gap:10px;text-decoration:none}.logo i{color:var(--ni-mint)!important}.logo-sub{display:block;font-size:.68rem;color:#bcebd5;font-weight:700;margin-top:4px;letter-spacing:-.01em}.nav-links a{color:#d9f3e7!important}.nav-links a:hover{color:var(--ni-mint)!important}.nav-login-btn,.mobile-login-btn{background:var(--ni-mint)!important;color:#062016!important;border-radius:999px!important;font-weight:900!important;box-shadow:0 8px 24px rgba(189,244,220,.18)}
-        .hero{min-height:540px;padding:150px 0 115px!important;text-align:left!important;background:linear-gradient(90deg,rgba(4,16,12,.96),rgba(6,30,21,.84) 45%,rgba(6,19,15,.35)),url('og-image.png') center/cover no-repeat;display:flex;align-items:center}.hero .container{max-width:1180px}.hero-kicker{color:var(--ni-mint);font-weight:900;letter-spacing:.06em;text-transform:uppercase;margin-bottom:14px}.hero h1{font-size:clamp(2.35rem,6vw,4.8rem)!important;max-width:800px;line-height:1.05;text-shadow:none!important}.main-subtitle-mobile-fix{max-width:680px!important;text-align:left!important;font-size:clamp(1.1rem,2.5vw,1.55rem)!important;color:#e8fff3!important;font-weight:700!important}
-        #searchGuide{color:var(--ni-mint)!important;font-size:1rem!important;margin-bottom:12px!important}#searchInput{max-width:760px!important;height:64px;border-radius:22px!important;border:1px solid rgba(189,244,220,.55)!important;box-shadow:0 22px 60px rgba(4,28,20,.22);font-weight:800;color:var(--ni-ink)!important}.ni-chip-row{display:flex;gap:8px;overflow-x:auto;justify-content:center;margin:16px auto 0;max-width:920px;padding-bottom:4px}.ni-chip{white-space:nowrap;border:1px solid rgba(189,244,220,.55);background:rgba(255,255,255,.96);color:var(--ni-green);border-radius:999px;padding:9px 14px;font-weight:900;cursor:pointer}.ni-chip:hover,.ni-chip.active{background:var(--ni-green);color:#fff}
-        .container#videoResults{max-width:1180px!important}.video-slider-container{width:100%;display:flex;align-items:center;justify-content:center;gap:14px}.video-slider-track{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;width:min(1080px,100%)}.video-card{width:100%!important;height:auto!important;min-height:0!important;margin:0!important;border-radius:18px!important;background:#fff!important;border:1px solid var(--ni-line);overflow:hidden;box-shadow:0 12px 30px rgba(11,33,25,.10)!important;display:flex;flex-direction:column}.video-card:hover{transform:translateY(-3px) scale(1.01)!important;box-shadow:0 20px 44px rgba(11,33,25,.16)!important}.video-card .video-thumb{width:100%!important;height:auto!important;aspect-ratio:16/9;object-fit:cover!important;display:block}.video-card{position:relative}.privacy-badge{position:absolute;right:10px;top:10px;background:rgba(6,19,15,.78);color:#eafff2;border-radius:999px;padding:5px 8px;font-size:10px;font-weight:900;text-transform:uppercase;z-index:2}.video-info{padding:14px!important;flex:1}.video-title{font-size:1rem!important;font-weight:900!important;line-height:1.45!important;color:var(--ni-ink)!important;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}.video-date{margin-top:6px;color:var(--ni-green);font-size:.78rem;font-weight:900}.video-desc{font-size:.84rem!important;color:var(--ni-muted)!important;line-height:1.55!important;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;margin-top:8px}.video-tag{background:var(--ni-soft)!important;color:var(--ni-green)!important;border-radius:999px!important;padding:4px 7px!important;font-size:.7rem!important;font-weight:900}.video-actions{display:flex;gap:8px;padding:0 14px 14px}.video-btn,.video-btn-center,.copy-btn{flex:1;text-align:center;text-decoration:none;border:1px solid var(--ni-line)!important;background:#f9fdfb!important;color:#123329!important;border-radius:12px!important;padding:10px!important;font-size:.82rem!important;font-weight:900!important;position:static!important;transform:none!important}.video-btn:hover,.video-btn-center:hover,.copy-btn:hover{background:var(--ni-green)!important;color:#fff!important}.video-slider-arrow{background:var(--ni-black)!important;color:var(--ni-mint)!important;border:1px solid rgba(189,244,220,.2)!important;box-shadow:0 12px 26px rgba(0,0,0,.2)}.section-title{color:var(--ni-black)!important}.categories,.testimonials{background:#f7fbf8!important}.category-card{border:1px solid var(--ni-line);box-shadow:0 14px 34px rgba(11,33,25,.08)!important}.category-image{background:linear-gradient(135deg,var(--ni-black),var(--ni-green))!important}.category-content h3{color:var(--ni-black)!important}footer{background:var(--ni-bg)!important;color:#d3efe1!important}.footer-section h3{color:var(--ni-mint)!important}
-        @media(max-width:768px){.hero{min-height:430px;padding:118px 0 70px!important;text-align:center!important}.main-subtitle-mobile-fix{text-align:center!important;min-width:0!important}.nav-links{display:none}.video-slider-track{display:flex!important;width:100%!important}.video-card{max-width:none!important}.ni-chip-row{justify-content:flex-start}.video-slider-arrow{width:36px!important;height:36px!important}.logo-sub{display:none}}
-
-        /* Auth visibility: 로그인 전에는 브랜드와 로그인 카드만 노출 */
-        body:not(.is-logged-in){background:radial-gradient(circle at 15% 8%,rgba(189,244,220,.24),transparent 30%),linear-gradient(135deg,#04100c,#0b2a1f 62%,#102f24)!important;min-height:100vh;}
-        body:not(.is-logged-in) header{background:rgba(6,19,15,.96)!important;box-shadow:none!important;}
-        body:not(.is-logged-in) .nav-links,
-        body:not(.is-logged-in) .hero,
-        body:not(.is-logged-in) #searchGuide,
-        body:not(.is-logged-in) #searchInput,
-        body:not(.is-logged-in) #searchBtn,
-        body:not(.is-logged-in) #niCategoryChips,
-        body:not(.is-logged-in) #videoResults,
-        body:not(.is-logged-in) #products,
-        body:not(.is-logged-in) #cases,
-        body:not(.is-logged-in) footer,
-        body:not(.is-logged-in) #mobileEstimateBar,
-        body:not(.is-logged-in) #estimateModal{display:none!important;}
-        body:not(.is-logged-in) #loginModal{display:flex!important;position:relative!important;z-index:1!important;left:auto!important;top:auto!important;width:100%!important;height:auto!important;min-height:100vh!important;background:transparent!important;padding:118px 20px 42px!important;align-items:center!important;justify-content:center!important;}
-        body:not(.is-logged-in) #loginModal > div{max-width:460px!important;width:min(460px,100%)!important;border-radius:28px!important;padding:32px!important;box-shadow:0 24px 70px rgba(0,0,0,.28)!important;border:1px solid rgba(189,244,220,.38)!important;}
-        body:not(.is-logged-in) #closeModal{display:none!important;}
-        body:not(.is-logged-in) #loginTitle{color:var(--ni-green)!important;font-weight:900!important;}
-        body:not(.is-logged-in) #loginDesc::before{content:'Nutrition Insight+\A 코치와 VIP 회원을 위한 프리미엄 웰니스 콘텐츠 플랫폼\A';white-space:pre-line;display:block;color:#0b2119;font-size:1.05rem;font-weight:900;line-height:1.55;margin-bottom:10px;}
-        body:not(.is-logged-in) .nav-login-btn{display:inline-flex!important;}
-        body.is-logged-in .nav-links{display:flex;}
-        body.is-logged-in #mobileEstimateBar{display:none;}
-        @media(max-width:768px){body.is-logged-in #mobileEstimateBar{display:flex;}body:not(.is-logged-in) #loginModal{padding-top:96px!important}.nav-login-btn{display:none!important}}
-    </style>
+    /* ==============================
+       RESPONSIVE
+    ============================== */
+    @media (max-width:768px) {
+      :root { --nav-h:56px; }
+      #topNav { padding:0 16px; }
+      .nav-center, #estimateBtnNav { display:none !important; }
+      #mobileNav { display:block; }
+      .hero-banner { padding:0 20px 48px; min-height:380px; }
+      .hero-title { font-size:2.6rem; }
+      .search-section { padding:20px 16px; }
+      .chip-row { flex-wrap:nowrap; overflow-x:auto; scrollbar-width:none; }
+      .chip-row::-webkit-scrollbar { display:none; }
+      .section-header { padding:0 16px; }
+      .card-row-scroll { padding:4px 16px 16px; }
+      .video-grid { padding:0 16px; grid-template-columns:1fr 1fr; gap:12px; }
+      .video-grid .video-card .card-desc { display:none; }
+      .cat-filter-row { padding:0 16px; }
+      .row-arrow { display:none; }
+      .video-card { width:200px; }
+      .video-grid .video-card { width:100%; }
+      footer { padding:32px 20px 90px; }
+      #mainFeed { padding-bottom:80px; }
+    }
+    @media (max-width:420px) {
+      .video-grid { grid-template-columns:1fr; }
+    }
+  </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <nav class="container" style="position:relative;">
-            <a class="logo" href="https://www.coach-edu.site/">
-                <i class="fas fa-leaf"></i>
-                Nutrition Insight+<span class="logo-sub">코치와 VIP 회원을 위한 프리미엄 웰니스 콘텐츠 플랫폼</span>
-            </a>
-            <ul class="nav-links">
-                <li><a href="https://www.coach-edu.site/">홈</a></li>
-                <li><a href="https://open.kakao.com/me/fitcouple" target="_blank">문의</a></li>
-                <li><a href="#" id="estimateBtn">제품견적</a></li>
 
-            </ul>
-            <button id="loginBtn" class="nav-login-btn">로그인</button>
-            <button id="mobileLoginBtn" class="mobile-login-btn" style="display:none;">로그인</button>
-        </nav>
-    </header>
+<!-- ============================== TOP NAV ============================== -->
+<header id="topNav">
+  <a class="nav-logo" href="#">
+    <span class="logo-leaf"><i class="fas fa-leaf"></i></span>
+    NUTRITION INSIGHT
+    <span class="logo-badge">+</span>
+  </a>
+  <ul class="nav-center" id="navLinks">
+    <li><a href="#" onclick="scrollToFeed()">콘텐츠</a></li>
+    <li><a href="https://open.kakao.com/me/fitcouple" target="_blank">문의</a></li>
+    <li><a href="#" id="estimateBtnNav"><i class="fas fa-calculator" style="font-size:.85rem"></i> 제품견적</a></li>
+  </ul>
+  <div class="nav-right">
+    <button id="loginBtn" onclick="handleLoginBtnClick()">로그인</button>
+  </div>
+</header>
 
-    <!-- 로그인/회원가입 모달 -->
-    <div id="loginModal" class="modal" style="display:none; position:fixed; z-index:2000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.4); justify-content:center; align-items:center;">
-      <div style="background:#fff; border-radius:16px; max-width:400px; width:90%; padding:2rem; position:relative; box-shadow:0 8px 32px rgba(0,0,0,0.2); animation:fadeInUp 0.4s;">
-        <button id="closeModal" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888;">&times;</button>
-        <div id="loginTitleBox" style="text-align:center; margin-bottom:1.5rem;">
-          <h2 id="loginTitle" style="color:#2c5aa0; margin-bottom:0.5rem;">로그인</h2>
-          <p id="loginDesc" style="color:#666; font-size:0.95rem;">허벌라이프ID와 멤버이름으로 로그인하세요</p>
+<!-- ============================== MOBILE NAV ============================== -->
+<nav id="mobileNav">
+  <div class="mobile-nav-inner">
+    <div class="mnav-item active" onclick="scrollToFeed()">
+      <i class="fas fa-home"></i><span>홈</span>
+    </div>
+    <div class="mnav-item" onclick="focusSearch()">
+      <i class="fas fa-search"></i><span>검색</span>
+    </div>
+    <div class="mnav-item mnav-estimate" id="mobileEstimateBtn" onclick="openEstimate()">
+      <i class="fas fa-calculator"></i> 견적
+    </div>
+    <div class="mnav-item" onclick="handleLoginBtnClick()">
+      <i class="fas fa-user"></i><span id="mobileLoginLabel">로그인</span>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================== AUTH WALL ============================== -->
+<div id="authWall">
+  <div class="aw-logo"><i class="fas fa-leaf"></i> NUTRITION INSIGHT+</div>
+  <p class="aw-sub">허벌라이프 코치 전용 프리미엄 웰니스 콘텐츠 플랫폼</p>
+  <div class="auth-card fade-up">
+    <div class="auth-tab-row">
+      <div class="auth-tab active" id="tabLogin" onclick="switchTab('login')">로그인</div>
+      <div class="auth-tab" id="tabSignup" onclick="switchTab('signup')">회원가입</div>
+    </div>
+
+    <!-- Login pane -->
+    <div class="auth-pane active" id="paneLogin">
+      <input class="auth-input" id="loginId" type="text" placeholder="허벌라이프 ID" autocomplete="off">
+      <input class="auth-input" id="loginName" type="text" placeholder="멤버 이름" autocomplete="off">
+      <div class="auth-err" id="loginErr"></div>
+      <button class="auth-submit" onclick="doLogin()">
+        <span id="loginBtnText">로그인</span>
+      </button>
+    </div>
+
+    <!-- Signup pane -->
+    <div class="auth-pane" id="paneSignup">
+      <input class="auth-input" id="signupId" type="text" placeholder="허벌라이프 ID" autocomplete="off">
+      <input class="auth-input" id="signupName" type="text" placeholder="멤버 이름 (실명)" autocomplete="off">
+      <select class="auth-input" id="signupTeam">
+        <option value="">팀위치 선택</option>
+        <option>SP</option>
+        <option>월드팀</option>
+        <option>겟팀</option>
+        <option>밀리어네어팀</option>
+        <option>프레지던트팀</option>
+      </select>
+      <select class="auth-input" id="signupUpline">
+        <option value="">상위 사장님 선택</option>
+        <option>한효정</option>
+        <option>이주영</option>
+        <option>이은정</option>
+        <option>김미옥</option>
+        <option>이미자</option>
+      </select>
+      <div class="auth-err" id="signupErr"></div>
+      <button class="auth-submit" onclick="doSignup()">
+        <span id="signupBtnText">회원가입 신청</span>
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ============================== MAIN CONTENT ============================== -->
+<main id="mainContent">
+
+  <!-- Hero -->
+  <section class="hero-banner" id="heroSection">
+    <div class="hero-inner">
+      <div class="hero-kicker fade-up">Premium Wellness Streaming</div>
+      <h1 class="hero-title fade-up-2">건강한 삶을<br>위한 <span>인사이트</span></h1>
+      <p class="hero-sub fade-up-3">영상이 쌓이면 코치의 지식 자산이 됩니다.<br>검색창에 키워드를 입력하면 관련 영상이 즉시 나타납니다.</p>
+      <div class="hero-actions fade-up-3">
+        <button class="hero-btn hero-btn-primary" onclick="focusSearch()">
+          <i class="fas fa-search"></i> 영상 검색하기
+        </button>
+        <button class="hero-btn hero-btn-secondary" onclick="openEstimate()">
+          <i class="fas fa-calculator"></i> 제품 견적
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Search -->
+  <div class="search-section" id="searchSection">
+    <div class="search-wrap">
+      <div class="search-input-row">
+        <div class="search-box">
+          <i class="fas fa-search"></i>
+          <input id="searchInput" type="text" placeholder="갱년기, 다이어트, 혈당, 쉐이크, 알로에, 단백질…" autocomplete="off">
+          <button id="clearSearch" onclick="clearSearchInput()"><i class="fas fa-times"></i></button>
         </div>
-        <div style="border-top:1px solid #eee; margin:1.5rem 0;"></div>
-        <form style="display:flex; flex-direction:column; gap:0.7rem;">
-          <input type="text" placeholder="허벌라이프ID" style="padding:0.7rem; border-radius:8px; border:1px solid #ddd;">
-          <input type="text" placeholder="멤버이름" style="padding:0.7rem; border-radius:8px; border:1px solid #ddd;">
-          <button type="submit" style="background:#025937; color:#fff; border:none; border-radius:8px; padding:0.7rem; font-weight:600; cursor:pointer;">로그인</button>
-          <div id="loginToSignupBox" style="margin-top:0.7rem; display:flex; justify-content:center; align-items:center; gap:0.3rem;">
-            <span style="color:#444; font-size:0.98rem;">아직 회원가입을 하지 않으셨나요?</span>
-            <span id="showSignup" style="color:#025937; font-weight:600; cursor:pointer; text-decoration:underline; margin-left:0.3rem;">회원가입</span>
+      </div>
+      <div class="chip-row" id="chipRow">
+        <button class="chip active" data-word="">전체</button>
+        <button class="chip" data-word="다이어트">다이어트</button>
+        <button class="chip" data-word="쉐이크">쉐이크</button>
+        <button class="chip" data-word="알로에">알로에</button>
+        <button class="chip" data-word="단백질">단백질</button>
+        <button class="chip" data-word="장건강">장건강</button>
+        <button class="chip" data-word="관절">관절</button>
+        <button class="chip" data-word="피부">피부</button>
+        <button class="chip" data-word="운동">운동</button>
+        <button class="chip" data-word="코치교육">코치교육</button>
+        <button class="chip" data-word="멤버가입">멤버가입</button>
+        <button class="chip" data-word="갱년기">갱년기</button>
+        <button class="chip" data-word="혈당">혈당</button>
+      </div>
+      <div id="searchGuide">콘텐츠를 검색하거나 아래 카테고리를 둘러보세요.</div>
+    </div>
+  </div>
+
+  <!-- Feed -->
+  <div id="mainFeed">
+
+    <!-- Search results (hidden by default) -->
+    <div id="searchResultsSection" style="display:none;">
+      <div class="result-bar" id="resultBar"></div>
+      <div class="video-grid" id="searchGrid"></div>
+    </div>
+
+    <!-- Category filter + rows -->
+    <div id="browseFeed">
+      <div class="cat-filter-row" id="catFilterRow" style="margin-top:32px;">
+        <button class="cat-chip active" data-cat="all"><span class="cat-icon">🎬</span> 전체</button>
+        <button class="cat-chip" data-cat="ai팟캐스트"><span class="cat-icon">🎙️</span> AI건강팟캐스트</button>
+        <button class="cat-chip" data-cat="코치교육"><span class="cat-icon">📚</span> 코치교육</button>
+        <button class="cat-chip" data-cat="제품교육"><span class="cat-icon">💊</span> 제품교육</button>
+        <button class="cat-chip" data-cat="다이어트"><span class="cat-icon">⚡</span> 다이어트</button>
+        <button class="cat-chip" data-cat="건강정보"><span class="cat-icon">🩺</span> 건강정보</button>
+        <button class="cat-chip" data-cat="고객사례"><span class="cat-icon">⭐</span> 고객사례</button>
+      </div>
+
+      <!-- Dynamic rows rendered by JS -->
+      <div id="videoRows"></div>
+
+      <!-- Loading skeletons -->
+      <div id="loadingFeed" style="margin-bottom:48px;">
+        <div class="video-section">
+          <div class="section-header">
+            <div class="skeleton" style="width:180px;height:22px;border-radius:6px;"></div>
           </div>
-        </form>
-        <form id="signupForm" style="display:none; flex-direction:column; gap:0.7rem; margin-top:1rem;">
-          <input type="text" placeholder="허벌라이프ID" style="padding:0.7rem; border-radius:8px; border:1px solid #ddd;">
-          <input type="text" placeholder="멤버이름" style="padding:0.7rem; border-radius:8px; border:1px solid #ddd;">
-          <select placeholder="팀위치" style="padding:0.7rem; border-radius:8px; border:1px solid #ddd; color:#555;">
-            <option value="">팀위치</option>
-            <option value="SP">SP</option>
-            <option value="월드팀">월드팀</option>
-            <option value="겟팀">겟팀</option>
-            <option value="밀리어네어팀">밀리어네어팀</option>
-            <option value="프레지던트팀">프레지던트팀</option>
-          </select>
-          <select placeholder="상위사장님" style="padding:0.7rem; border-radius:8px; border:1px solid #ddd; color:#555;">
-            <option value="">상위사장님</option>
-            <option value="한효정">한효정</option>
-            <option value="이주영">이주영</option>
-            <option value="이은정">이은정</option>
-            <option value="김미옥">김미옥</option>
-            <option value="이미자">이미자</option>
-          </select>
-          <button type="submit" style="background:#2c5aa0; color:#fff; border:none; border-radius:8px; padding:0.7rem; font-weight:600; cursor:pointer;">회원가입</button>
-          <button type="button" id="showLogin" style="background:none; color:#025937; border:none; margin-top:0.5rem; cursor:pointer;">로그인으로 돌아가기</button>
-        </form>
-      </div>
-    </div>
-
-    <!-- 안내 모달 -->
-    <div id="alertModal" style="display:none; position:fixed; z-index:3000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.35); justify-content:center; align-items:center;">
-      <div style="background:#fff; border-radius:18px; max-width:320px; width:90vw; padding:2.2rem 1.2rem 1.5rem; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.18); position:relative;">
-        <button id="closeAlertModal" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888;">&times;</button>
-        <div style="font-size:3rem; margin-bottom:0.7rem;">😢</div>
-        <div style="font-size:1.13rem; color:#025937; font-weight:600; margin-bottom:1.2rem;">죄송합니다.<br>모든 영상은 그룹내 정식 코치들만 시청이 가능합니다.</div>
-        <div style="display:flex; justify-content:center; gap:12px; margin-top:10px;">
-          <button id="alertLoginBtn" style="background:#025937; color:#fff; border:none; border-radius:8px; padding:0.6rem 1.5rem; font-size:1rem; font-weight:500; cursor:pointer;">로그인</button>
-          <button id="alertSignupBtn" style="background:#fff; color:#025937; border:1.5px solid #025937; border-radius:8px; padding:0.6rem 1.5rem; font-size:1rem; font-weight:500; cursor:pointer;">회원가입</button>
-        </div>
-      </div>
-    </div>
-
-    <!-- Hero Section -->
-    <section id="home" class="hero">
-        <div class="container">
-            <div class="hero-kicker fade-in-up">Premium Wellness Streaming</div><h1 class="fade-in-up">건강한 삶을 위한 웰니스 인사이트를 한곳에</h1>
-            <div class="fade-in-up" style="margin-bottom:2rem; display:flex; justify-content:center;">
-              <div class="main-subtitle-mobile-fix" style="font-size:2.1rem; line-height:1.5; font-weight:400; text-align:center; width:100%; max-width:540px; min-width:320px; background:none; border-radius:0; box-shadow:none; padding:0;">
-                영상이 쌓이면 코치의 지식 자산이 됩니다.
-              </div>
+          <div class="card-row-outer">
+            <div class="card-row-scroll">
+              ${[1,2,3,4,5].map(() => '<div class="skeleton skeleton-card"></div>').join('')}
             </div>
-        </div>
-    </section>
-
-    <!-- 검색 안내 및 검색창 UI -->
-    <div class="container" style="margin-top:-30px; margin-bottom:30px; text-align:center;">
-      <div id="searchGuide" style="color:#FFD600; font-size:1.08rem; font-weight:600; margin-bottom:0; padding-bottom:0; margin-top:0;">추천 콘텐츠를 둘러보거나 검색어를 입력해 주세요.</div>
-      <div style="display:flex; justify-content:center; align-items:center; max-width:400px; margin:0 auto; margin-top:0; padding-top:0;">
-        <div style="position:relative; width:100%; max-width:400px; margin-top:0; padding-top:0;">
-          <input id="searchInput" type="text" placeholder="예: 아토피, 혈당, 쉐이크, 장건강, 갱년기, 다이어트 실패" style="width:100%; max-width:100%; padding:0.7rem 2.5rem 0.7rem 1.2rem; border-radius:30px; border:1px solid #bbb; font-size:1.1rem; margin-top:0;">
-          <button id="searchBtn" style="position:absolute; right:8px; top:50%; transform:translateY(-50%); background:transparent; border:none; padding:0; margin:0; cursor:pointer;">
-            <i class="fas fa-search" style="color:#025937; font-size:1.3rem;"></i>
-          </button>
-        </div>
-      </div>
-      <div class="ni-chip-row" id="niCategoryChips"><button class="ni-chip active" data-word="">전체</button><button class="ni-chip" data-word="다이어트">다이어트</button><button class="ni-chip" data-word="쉐이크">쉐이크</button><button class="ni-chip" data-word="알로에">알로에</button><button class="ni-chip" data-word="단백질">단백질</button><button class="ni-chip" data-word="장건강">장건강</button><button class="ni-chip" data-word="관절">관절</button><button class="ni-chip" data-word="피부">피부</button><button class="ni-chip" data-word="운동">운동</button><button class="ni-chip" data-word="코치교육">코치교육</button><button class="ni-chip" data-word="멤버가입">멤버가입</button></div>      <div style="margin-top:18px; color:#fff; font-size:1.08rem; font-family:'Noto Sans KR', 'Malgun Gothic', 'Apple SD Gothic Neo', Arial, sans-serif; font-weight:300; letter-spacing:-0.01em;">코치와 VIP 회원을 위한 프리미엄 웰니스 콘텐츠를 빠르게 검색하고 바로 시청하세요.</div>
-    </div>
-    <!-- 검색 결과 영상 리스트 -->
-    <div class="container" id="videoResults" style="display:flex; flex-wrap:wrap; gap:2rem; justify-content:center; margin-bottom:60px;"></div>
-
-    <!-- Features Section -->
-    <!-- Features Section 삭제됨 -->
-
-    <!-- Content Categories -->
-    <section id="products" class="categories">
-        <div class="container">
-            <h2 class="section-title">추천 콘텐츠</h2>
-            <div class="categories-grid">
-                <div class="category-card">
-                    <div class="category-image">
-                        <i class="fas fa-pills"></i>
-                    </div>
-                    <div class="category-content">
-                        <h3>제/품/교/육</h3>
-                        <p>허벌라이프의 다양한 제품에 대한 상세한 정보와 사용법을 배워보세요.</p>
-                        <div class="category-stats">
-                            <span>50+ 제품</span>
-                            <span>200+ 영상</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-image">
-                        <i class="fas fa-chalkboard-teacher"></i>
-                    </div>
-                    <div class="category-content">
-                        <h3>회/사/강/의</h3>
-                        <p>허벌라이프의 비전, 미션, 그리고 비즈니스 모델에 대한 전문 강의입니다.</p>
-                        <div class="category-stats">
-                            <span>30+ 강의</span>
-                            <span>100+ 시간</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-image">
-                        <i class="fas fa-user-check"></i>
-                    </div>
-                    <div class="category-content">
-                        <h3>고/객/사/례</h3>
-                        <p>실제 고객들의 성공 사례와 변화 스토리를 통해 영감을 얻어보세요.</p>
-                        <div class="category-stats">
-                            <span>500+ 사례</span>
-                            <span>실시간 업데이트</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-image">
-                        <i class="fas fa-heartbeat"></i>
-                    </div>
-                    <div class="category-content">
-                        <h3>건/강/정/보</h3>
-                        <p>영양, 운동, 웰빙에 관한 최신 정보와 팁을 제공합니다.</p>
-                        <div class="category-stats">
-                            <span>1000+ 콘텐츠</span>
-                            <span>전문가 검증</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="category-card">
-                    <div class="category-image">
-                        <i class="fas fa-chalkboard"></i>
-                    </div>
-                    <div class="category-content">
-                        <h3>코/치/교/육</h3>
-                        <p>웰니스코치라면 무조건 봐야하는 영상 만 모았습니다</p>
-                        <div class="category-stats">
-                            <span>신규</span>
-                            <span>추천 영상</span>
-                        </div>
-                    </div>
-                </div>
-                <div class="category-card" onclick="window.open('https://youtube.com/playlist?list=PLPSWMuklm8j0BYWQaOfuaINuwvtyoviTV&si=cACTSg9_4bT06a2a', '_blank')" style="cursor:pointer;">
-                    <div class="category-image">
-                        <i class="fas fa-podcast"></i>
-                    </div>
-                    <div class="category-content">
-                        <h3>Ai건강팟캐스트</h3>
-                        <p>최신 Ai 건강 정보와 팟캐스트를 한 곳에 모았습니다</p>
-                        <div class="category-stats">
-                            <span>AI 추천</span>
-                            <span>팟캐스트</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Testimonials -->
-    <section id="cases" class="testimonials">
-        <div class="container">
-            <h2 class="section-title">고객들의 이야기</h2>
-            <div class="testimonials-grid">
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"허벌라이프 영양코치 플랫폼을 통해 제품에 대한 정확한 정보를 얻을 수 있었고, 고객들에게 더 전문적인 상담을 제공할 수 있게 되었습니다."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">김</div>
-                        <div class="author-info">
-                            <h4>김영희</h4>
-                            <p>허벌라이프 독립영양코치</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"플랫폼의 강의와 교육 자료들이 정말 체계적이고 실용적이어서 비즈니스 성장에 큰 도움이 되었습니다."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">박</div>
-                        <div class="author-info">
-                            <h4>박민수</h4>
-                            <p>허벌라이프 수퍼바이저</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="testimonial-card">
-                    <p class="testimonial-text">"고객 사례들을 통해 동기부여를 받고, 건강 정보를 통해 개인적으로도 많은 도움을 받았습니다."</p>
-                    <div class="testimonial-author">
-                        <div class="author-avatar">이</div>
-                        <div class="author-info">
-                            <h4>이지은</h4>
-                            <p>허벌라이프 영양코치</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Footer -->
-    <footer id="contact">
-        <div class="container">
-            <div class="footer-content">
-                <div class="footer-section">
-                    <h3>허벌라이프 영양코치</h3>
-                    <p>건강한 삶을 위한 모든 것을 한 곳에서 만나보세요. 전문적인 교육과 실용적인 정보로 여러분의 성공을 지원합니다.</p>
-                    <div class="social-links">
-                        <a href="#"><i class="fab fa-facebook-f"></i></a>
-                        <a href="#"><i class="fab fa-instagram"></i></a>
-                        <a href="#"><i class="fab fa-youtube"></i></a>
-                        <a href="#"><i class="fab fa-linkedin-in"></i></a>
-                    </div>
-                </div>
-                <div class="footer-section">
-                    <h3>빠른 링크</h3>
-                    <p><a href="#products">제품 교육</a></p>
-                    <p><a href="#lectures">회사 강의</a></p>
-                    <p><a href="#cases">고객 사례</a></p>
-                    <p><a href="#health">건강 정보</a></p>
-                </div>
-                <div class="footer-section">
-                    <h3>지원</h3>
-                    <p><a href="https://open.kakao.com/me/fitcouple" target="_blank">자주 묻는 질문</a></p>
-                    <p><a href="https://open.kakao.com/me/fitcouple" target="_blank">기술 지원</a></p>
-                    <p><a href="https://open.kakao.com/me/fitcouple" target="_blank">문의하기</a></p>
-                    <p><a href="https://open.kakao.com/me/fitcouple" target="_blank">피드백</a></p>
-                </div>
-                <div class="footer-section">
-                    <h3>연락처</h3>
-                    <p><i class="fas fa-phone"></i> 010.8003.0722</p>
-                    <p><i class="fas fa-envelope"></i> hebalbubu@gmail.com</p>
-                    <p><i class="fas fa-map-marker-alt"></i> 군산시 의료원로</p>
-                </div>
-            </div>
-            <div class="footer-bottom">
-                <p>&copy; Nutrition Insight+ · 프리미엄 웰니스 콘텐츠 플랫폼</p>
-            </div>
-        </div>
-    </footer>
-
-    <!-- 제품견적 모달 -->
-    <div id="estimateModal" style="display:none; position:fixed; z-index:4000; left:0; top:0; width:100vw; height:100vh; background:rgba(0,0,0,0.32); justify-content:center; align-items:center;">
-      <div style="background:#fff; border-radius:18px; max-width:650px; width:98vw; padding:2.2rem 1.2rem 1.5rem; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.18); position:relative;">
-        <button id="closeEstimateModal" style="position:absolute; top:16px; right:16px; background:none; border:none; font-size:1.5rem; cursor:pointer; color:#888;">&times;</button>
-        <h2 style="color:#025937; font-size:1.4rem; font-weight:700; margin-bottom:1.2rem;">제품 견적서</h2>
-        <div style="max-height:340px; overflow-y:auto; margin-bottom:1.2rem;">
-          <table style="width:100%; border-collapse:collapse; font-size:1.05rem;">
-            <thead id="estimateTableHead"></thead>
-            <tbody id="estimateTableBody"></tbody>
-          </table>
-        </div>
-        <div id="estimateTotalWrap" style="font-size:1.15rem; font-weight:700; color:#008f45; margin-bottom:0.7rem;"></div>
-        <button id="estimateCloseBtn" style="background:#025937; color:#fff; border:none; border-radius:8px; padding:0.7rem 2.2rem; font-size:1.08rem; font-weight:600; cursor:pointer;">닫기</button>
-      </div>
-    </div>
-
-    <div id="mobileEstimateBar">
-      <button id="mobileEstimateBtn">제품견적</button>
-
-    </div>
-
-    <script>
-    // SECURITY WARNING: Airtable PAT/API Key가 브라우저 코드에 포함되어 있습니다. 공개 저장소에 올리면 위험합니다. 기존 운영 방식 유지 목적일 때만 사용하세요.
-    // 유튜브 API 연동: 여러 재생목록의 영상 자동 불러오기
-    const API_KEY = 'AIzaSyDyx75uISUhEE6kKPFArUFfYtF2pcWDfWU';
-    const PLAYLIST_IDS = [
-      'PLPSWMuklm8j0BYWQaOfuaINuwvtyoviTV',
-      'PLPSWMuklm8j2Nsrw0MriCiZtMYY_PL8Ii',
-      'PLPSWMuklm8j2lN5m8MUhoT73iouhI1l5L',
-      'PLPSWMuklm8j35-rWI85gjbodU_H_PVNxt',
-      'PLPSWMuklm8j2GeFloktCmL_yj3L9MKYlL',
-      'PLPSWMuklm8j1OlWjzxF0UQHEDX6B441ES',
-      'PLPSWMuklm8j1C3jacgnycMteKW8_TnVZP'
-    ];
-    let videos = [];
-
-    async function fetchPlaylistVideos(playlistId) {
-      let allItems = [];
-      let nextPageToken = '';
-      do {
-        const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${API_KEY}${nextPageToken ? `&pageToken=${nextPageToken}` : ''}`;
-        const res = await fetch(url);
-        const data = await res.json();
-        if (data.items) allItems = allItems.concat(data.items);
-        nextPageToken = data.nextPageToken;
-      } while (nextPageToken);
-      return allItems
-        .filter(item => item.snippet && item.snippet.resourceId && item.snippet.thumbnails && item.snippet.thumbnails.medium)
-        .map(item => ({
-          id: item.snippet.resourceId.videoId,
-          title: item.snippet.title,
-          description: item.snippet.description,
-          tags: [], // 태그는 video API로 별도 조회 필요, 기본은 빈 배열
-          url: `https://www.youtube.com/embed/${item.snippet.resourceId.videoId}`,
-          thumbnail: item.snippet.thumbnails.high?.url || item.snippet.thumbnails.medium.url,
-          uploadDate: (item.snippet.publishedAt || '').slice(0, 10),
-          privacyStatus: 'public'
-        }));
-    }
-
-    async function fetchAllPlaylistsVideos() {
-      let allVideos = [];
-      for (const id of PLAYLIST_IDS) {
-        const vids = await fetchPlaylistVideos(id);
-        allVideos = allVideos.concat(vids);
-      }
-      return allVideos;
-    }
-
-    // 로그인 상태 관리 함수
-    function applyAuthVisibility() {
-      const loggedIn = localStorage.getItem('isLoggedIn') === 'true';
-      document.body.classList.toggle('is-logged-in', loggedIn);
-      document.body.classList.toggle('is-logged-out', !loggedIn);
-      if (!loggedIn) {
-        const results = document.getElementById('videoResults');
-        if (results) results.innerHTML = '';
-        const input = document.getElementById('searchInput');
-        if (input) input.value = '';
-      }
-    }
-    function setLoginState(loggedIn) {
-      if (loggedIn) {
-        localStorage.setItem('isLoggedIn', 'true');
-      } else {
-        localStorage.removeItem('isLoggedIn');
-      }
-      syncLoginBtnText();
-      showMobileLoginBtn();
-      applyAuthVisibility();
-    }
-
-    // 페이지 로드 시 로그인 상태 반영
-    window.onload = function() {
-      syncLoginBtnText();
-      applyAuthVisibility();
-    };
-
-    // PC 검색 결과 렌더링 (기존 유지)
-    function renderVideosPC(keyword = '') {
-      const results = document.getElementById('videoResults');
-      const guide = document.getElementById('searchGuide');
-      const q = keyword.trim().toLowerCase();
-      if (localStorage.getItem('isLoggedIn') !== 'true') {
-        if (q) {
-          guide.style.display = 'block';
-          guide.textContent = '회원가입후 이용하시기 바랍니다.';
-          guide.style.color = '#FFD600';
-          guide.style.background = 'transparent';
-          guide.style.fontWeight = '600';
-          results.innerHTML = '';
-        } else {
-          guide.style.display = 'block';
-          guide.textContent = '';
-          results.innerHTML = '';
-        }
-        return;
-      }
-      guide.style.display = 'block';
-      guide.textContent = '시청할 영상을 검색하세요.';
-      guide.style.color = '#FFD600';
-      guide.style.background = 'transparent';
-      guide.style.fontWeight = '600';
-      if (!q) {
-        results.innerHTML = '';
-        return;
-      }
-      const keywords = q.split(/[\,\s]+/).filter(Boolean);
-      let filtered = videos.filter(v =>
-        keywords.every(word =>
-          v.title.toLowerCase().includes(word) ||
-          v.description.toLowerCase().includes(word) ||
-          (v.uploadDate || '').toLowerCase().includes(word) ||
-          (v.privacyStatus || '').toLowerCase().includes(word) ||
-          v.tags.some(tag => tag.toLowerCase().includes(word))
-        )
-      );
-      const seen = new Set();
-      filtered = filtered.filter(v => {
-        if (seen.has(v.id)) return false;
-        seen.add(v.id);
-        return true;
-      });
-      guide.textContent = `"${keyword}" 검색 결과 ${filtered.length}개`;
-      if (filtered.length === 0) {
-        results.innerHTML = '<div style="color:#dcebe3; font-size:1.1rem;">검색 결과가 없습니다.</div>';
-        return;
-      }
-      let sliderIndex = 0;
-      const cardsPerPage = 3;
-      function renderSlider() {
-        const totalPages = Math.ceil(filtered.length / cardsPerPage);
-        const start = sliderIndex * cardsPerPage;
-        const end = start + cardsPerPage;
-        const visible = filtered.slice(start, end);
-        results.innerHTML = `
-          <div class="video-slider-container">
-            <button class="video-slider-arrow left" id="sliderPrev" ${sliderIndex === 0 ? 'disabled' : ''}>&lt;</button>
-            <div class="video-slider-track">
-              ${visible.map(v => `
-                <div class=\"video-card\">
-                  <img src=\"${v.thumbnail}\" alt=\"썸네일\" class=\"video-thumb\">
-                  <div class=\"video-info\">
-                    <div class=\"video-title\">${v.title}</div>
-                    <div class=\"video-desc\">${v.description}</div>
-                    <div class=\"video-tags\">
-                      ${v.tags.map(tag => `<span class='video-tag'>#${tag}</span>`).join('')}
-                    </div>
-                  </div>
-                  <a href=\"#\" onclick=\"handleVideoClick(event, '${v.url}')\" class=\"video-btn\">영상 보기</a>
-                </div>
-              `).join('')}
-            </div>
-            <button class="video-slider-arrow right" id="sliderNext" ${sliderIndex >= totalPages-1 ? 'disabled' : ''}>&gt;</button>
           </div>
-        `;
-        const prevBtn = document.getElementById('sliderPrev');
-        const nextBtn = document.getElementById('sliderNext');
-        if (prevBtn) prevBtn.onclick = () => { sliderIndex = Math.max(0, sliderIndex-1); renderSlider(); };
-        if (nextBtn) nextBtn.onclick = () => { sliderIndex = Math.min(totalPages-1, sliderIndex+1); renderSlider(); };
-      }
-      renderSlider();
-    }
-
-    // 모바일 검색 결과 렌더링 (완전 분리)
-    function renderVideosMobile(keyword = '') {
-      const results = document.getElementById('videoResults');
-      const guide = document.getElementById('searchGuide');
-      const q = keyword.trim().toLowerCase();
-      if (localStorage.getItem('isLoggedIn') !== 'true') {
-        if (q) {
-          guide.style.display = 'block';
-          guide.textContent = '회원가입후 이용하시기 바랍니다.';
-          guide.style.color = '#FFD600';
-          guide.style.background = 'transparent';
-          guide.style.fontWeight = '600';
-          results.innerHTML = '';
-        } else {
-          guide.style.display = 'block';
-          guide.textContent = '';
-          results.innerHTML = '';
-        }
-        return;
-      }
-      guide.style.display = 'block';
-      guide.textContent = '시청할 영상을 검색하세요.';
-      guide.style.color = '#FFD600';
-      guide.style.background = 'transparent';
-      guide.style.fontWeight = '600';
-      if (!q) {
-        results.innerHTML = '';
-        return;
-      }
-      const keywords = q.split(/[\,\s]+/).filter(Boolean);
-      let filtered = videos.filter(v =>
-        keywords.every(word =>
-          v.title.toLowerCase().includes(word) ||
-          v.description.toLowerCase().includes(word) ||
-          (v.uploadDate || '').toLowerCase().includes(word) ||
-          (v.privacyStatus || '').toLowerCase().includes(word) ||
-          v.tags.some(tag => tag.toLowerCase().includes(word))
-        )
-      );
-      const seen = new Set();
-      filtered = filtered.filter(v => {
-        if (seen.has(v.id)) return false;
-        seen.add(v.id);
-        return true;
-      });
-      guide.textContent = `"${keyword}" 검색 결과 ${filtered.length}개`;
-      if (filtered.length === 0) {
-        results.innerHTML = '<div style="color:#dcebe3; font-size:1.1rem;">검색 결과가 없습니다.</div>';
-        return;
-      }
-      let sliderIndex = 0;
-      const cardsPerPage = 1;
-      function renderSlider() {
-        const totalPages = Math.ceil(filtered.length / cardsPerPage);
-        const start = sliderIndex * cardsPerPage;
-        const end = start + cardsPerPage;
-        const visible = filtered.slice(start, end);
-        results.innerHTML = `
-          <div class=\"video-slider-container\" style=\"display:flex;align-items:center;justify-content:center;\">
-            <button class=\"video-slider-arrow left\" id=\"sliderPrev\" ${sliderIndex === 0 ? 'disabled' : ''}>&lt;</button>
-            <div class=\"video-slider-track\">
-              ${visible.map(v => `
-                <div class=\"video-card\" style=\"width:92vw;max-width:420px;height:370px;margin:0 auto;position:relative;\">
-                  <img src=\"${v.thumbnail}\" alt=\"썸네일\" class=\"video-thumb\">
-                  <div class=\"video-info\">
-                    <div class=\"video-title\">${v.title}</div>
-                    <div class=\"video-desc\">${v.description}</div>
-                    <div class=\"video-tags\">
-                      ${v.tags.map(tag => `<span class='video-tag'>#${tag}</span>`).join('')}
-                    </div>
-                  </div>
-                  <button class=\"video-btn-center\" onclick=\"handleVideoClick(event, '${v.url}')\">영상보기</button>
-                </div>
-              `).join('')}
-            </div>
-            <button class=\"video-slider-arrow right\" id=\"sliderNext\" ${sliderIndex >= totalPages-1 ? 'disabled' : ''}>&gt;</button>
-          </div>
-        `;
-        const prevBtn = document.getElementById('sliderPrev');
-        const nextBtn = document.getElementById('sliderNext');
-        if (prevBtn) prevBtn.onclick = () => { sliderIndex = Math.max(0, sliderIndex-1); renderSlider(); };
-        if (nextBtn) nextBtn.onclick = () => { sliderIndex = Math.min(totalPages-1, sliderIndex+1); renderSlider(); };
-      }
-      renderSlider();
-    }
-
-    // PC/모바일 분기 렌더 함수
-    function renderVideos(keyword = '') {
-      if (window.innerWidth <= 768) {
-        renderVideosMobile(keyword);
-      } else {
-        renderVideosPC(keyword);
-      }
-    }
-
-    // 검색 입력 이벤트 연결 및 초기 데이터 로딩
-    document.getElementById('searchInput').addEventListener('input', e => {
-      renderVideos(e.target.value);
-    });
-
-    // 최초에는 안내 메시지 및 유튜브 영상 데이터 불러오기
-    (async function() {
-      renderVideos(''); // 안내 메시지 먼저
-      videos = await fetchAllPlaylistsVideos();
-      // 최초 검색어가 있으면 반영
-      const searchInput = document.getElementById('searchInput');
-      if (searchInput.value) renderVideos(searchInput.value);
-    })();
-
-    // Smooth scrolling for navigation links
-    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-        anchor.addEventListener('click', function (e) {
-            e.preventDefault();
-            const target = document.querySelector(this.getAttribute('href'));
-            if (target) {
-                target.scrollIntoView({
-                    behavior: 'smooth',
-                    block: 'start'
-                });
-            }
-        });
-    });
-
-    // Add scroll effect to header
-    window.addEventListener('scroll', function() {
-        const header = document.querySelector('header');
-        if (window.scrollY > 100) {
-            header.style.background = 'rgba(255, 255, 255, 0.98)';
-        } else {
-            header.style.background = 'rgba(255, 255, 255, 0.95)';
-        }
-    });
-
-    // Add animation on scroll
-    const observerOptions = {
-        threshold: 0.1,
-        rootMargin: '0px 0px -50px 0px'
-    };
-
-    const observer = new IntersectionObserver(function(entries) {
-        entries.forEach(entry => {
-            if (entry.isIntersecting) {
-                entry.target.classList.add('fade-in-up');
-            }
-        });
-    }, observerOptions);
-
-    // Observe all feature cards, category cards, and testimonial cards
-    document.querySelectorAll('.feature-card, .category-card, .testimonial-card').forEach(el => {
-        observer.observe(el);
-    });
-
-
-    function formatNiDate(value) {
-      if (!value) return '';
-      const d = new Date(value);
-      if (Number.isNaN(d.getTime())) return value;
-      return `${d.getFullYear()}.${String(d.getMonth()+1).padStart(2,'0')}.${String(d.getDate()).padStart(2,'0')}`;
-    }
-    function copyVideoLink(e, url) {
-      e.preventDefault();
-      e.stopPropagation();
-      const done = () => alert('링크가 복사되었습니다.');
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(done).catch(() => legacyCopyNi(url, done));
-      else legacyCopyNi(url, done);
-    }
-    function legacyCopyNi(text, done) {
-      const ta = document.createElement('textarea');
-      ta.value = text;
-      document.body.appendChild(ta);
-      ta.select();
-      document.execCommand('copy');
-      ta.remove();
-      done();
-    }
-    function enhanceNiCards() {
-      document.querySelectorAll('.video-card').forEach(card => {
-        if (!card.querySelector('.privacy-badge')) {
-          const badge = document.createElement('span');
-          badge.className = 'privacy-badge';
-          badge.textContent = 'public';
-          card.appendChild(badge);
-        }
-        const btn = card.querySelector('.video-btn, .video-btn-center');
-        if (btn && !card.querySelector('.copy-btn')) {
-          const onclick = btn.getAttribute('onclick') || '';
-          const match = onclick.match(/'([^']+)'/);
-          const url = match ? match[1] : btn.href;
-          const found = (window.videos || videos || []).find(v => v.url === url);
-          const info = card.querySelector('.video-info');
-          if (info && found && !info.querySelector('.video-date')) {
-            const date = document.createElement('div');
-            date.className = 'video-date';
-            date.textContent = `${formatNiDate(found.uploadDate)} · ${found.privacyStatus || 'public'}`;
-            const title = info.querySelector('.video-title');
-            if (title) title.insertAdjacentElement('afterend', date);
-          }
-          const actions = document.createElement('div');
-          actions.className = 'video-actions';
-          btn.parentElement.insertBefore(actions, btn);
-          actions.appendChild(btn);
-          const copy = document.createElement('button');
-          copy.className = 'copy-btn';
-          copy.textContent = '링크 복사';
-          copy.onclick = e => copyVideoLink(e, url);
-          actions.appendChild(copy);
-        }
-      });
-    }
-    const niCardObserver = new MutationObserver(enhanceNiCards);
-    document.addEventListener('DOMContentLoaded', function() {
-      const results = document.getElementById('videoResults');
-      if (results) niCardObserver.observe(results, { childList: true, subtree: true });
-      document.querySelectorAll('.ni-chip').forEach(btn => {
-        btn.addEventListener('click', function() {
-          document.querySelectorAll('.ni-chip').forEach(b => b.classList.remove('active'));
-          this.classList.add('active');
-          const input = document.getElementById('searchInput');
-          input.value = this.dataset.word || '';
-          renderVideos(input.value);
-        });
-      });
-    });
-    // PC/모바일 로그인 버튼 동기화
-    function syncLoginBtnText() {
-      var text = localStorage.getItem('isLoggedIn') === 'true' ? '로그아웃' : '로그인';
-      document.getElementById('loginBtn').textContent = text;
-      document.getElementById('mobileLoginBtn').textContent = text;
-    }
-    function showMobileLoginBtn() {
-      var mobileBtn = document.getElementById('mobileLoginBtn');
-      var pcBtn = document.getElementById('loginBtn');
-      if (window.innerWidth <= 768) {
-        mobileBtn.style.display = 'inline-block';
-        pcBtn.style.display = 'none';
-      } else {
-        mobileBtn.style.display = 'none';
-        pcBtn.style.display = 'inline-block';
-      }
-      syncLoginBtnText();
-    }
-    window.addEventListener('resize', showMobileLoginBtn);
-    window.addEventListener('DOMContentLoaded', function(){ showMobileLoginBtn(); applyAuthVisibility(); });
-    // 로그아웃 시 입력값 초기화 함수
-    function clearLoginInputs() {
-      document.querySelectorAll('#loginModal input').forEach(input => input.value = '');
-    }
-    // 로그인/로그아웃 버튼 클릭 이벤트 모두에 적용
-    function loginBtnHandler(e) {
-      var btn = e.target;
-      if (btn.textContent === '로그아웃') {
-        setLoginState(false);
-        syncLoginBtnText();
-        clearLoginInputs(); // 입력값 초기화
-        alert('로그아웃 되었습니다.');
-        return;
-      }
-      e.preventDefault();
-      document.getElementById('loginModal').style.display = 'flex';
-      document.querySelector('#loginModal form').style.display = 'flex';
-      document.getElementById('signupForm').style.display = 'none';
-    }
-    document.getElementById('loginBtn').onclick = loginBtnHandler;
-    document.getElementById('mobileLoginBtn').onclick = loginBtnHandler;
-
-    // 검색 버튼 클릭 시 검색 동작
-    function doSearch() {
-      const val = document.getElementById('searchInput').value;
-      renderVideos(val);
-    }
-    document.getElementById('searchBtn').onclick = doSearch;
-    document.getElementById('searchInput').addEventListener('keydown', function(e) {
-      if (e.key === 'Enter') doSearch();
-    });
-
-    // 이메일 로그인 폼(로그인) 성공 시 처리
-    var loginForm = document.querySelector('#loginModal form');
-    if (loginForm) {
-      loginForm.onsubmit = async function(e) {
-        e.preventDefault();
-        var id = this.querySelector('input[placeholder="허벌라이프ID"]').value.trim();
-        var name = this.querySelector('input[placeholder="멤버이름"]').value.trim();
-        if (!id || !name) {
-          alert('허벌라이프ID와 멤버이름을 입력하세요.');
-          return false;
-        }
-        // Airtable에서 해당 유저 조회 및 승인 체크 (대소문자/공백 무시)
-        const AIRTABLE_API_KEY = 'patfyiX4h33ZcZopN.952737b1246b7e8f4b8093bb308df2cdac3af1f9573696b4c5af6981f63374b4';
-        const AIRTABLE_BASE_ID = 'appAHmDSvu3AVoBMN';
-        const AIRTABLE_TABLE_NAME = 'tbluQFiRPVXzP50iV';
-        // 허벌라이프ID와 코치이름이 모두 일치하는 레코드만 조회 (대소문자/공백 무시)
-        const filter = `AND(LOWER({herbalife_id})='${id.toLowerCase()}', LOWER({name})='${name.toLowerCase()}')`;
-        const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}?filterByFormula=${encodeURIComponent(filter)}`;
-        const res = await fetch(url, { headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` } });
-        const data = await res.json();
-        if (data.records.length === 0) {
-          alert('가입 정보가 없습니다. 회원가입을 먼저 진행해 주세요.');
-          return false;
-        }
-        const approved = data.records[0].fields.approved;
-        if (approved === '승인') {
-          setLoginState(true);
-          document.getElementById('loginModal').style.display = 'none';
-          localStorage.setItem('lastLoginId', id); // 추가
-          localStorage.setItem('lastLoginName', name); // 추가
-          if (!localStorage.getItem('welcomed_' + id)) {
-            // 커스텀 환영 모달 표시
-            const welcomeModal = document.createElement('div');
-            welcomeModal.style.position = 'fixed';
-            welcomeModal.style.left = '0';
-            welcomeModal.style.top = '0';
-            welcomeModal.style.width = '100vw';
-            welcomeModal.style.height = '100vh';
-            welcomeModal.style.background = 'rgba(0,0,0,0.25)';
-            welcomeModal.style.zIndex = '9999';
-            welcomeModal.style.display = 'flex';
-            welcomeModal.style.justifyContent = 'center';
-            welcomeModal.style.alignItems = 'center';
-            welcomeModal.innerHTML = `
-              <div style="background:#fff; border-radius:18px; max-width:350px; width:90vw; padding:2.2rem 1.2rem 1.5rem; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.18); position:relative;">
-                <div style="font-size:1.13rem; color:#222; font-weight:400; margin-bottom:1.2rem;">
-                  환영합니다!<br>
-                  <span style="font-weight:700; color:#025937;">정식 플랫폼 이용이 가능합니다.</span>
-                </div>
-                <button id="closeWelcomeModal" style="background:#025937; color:#fff; border:none; border-radius:8px; padding:0.6rem 1.5rem; font-size:1rem; font-weight:500; cursor:pointer;">확인</button>
-              </div>
-            `;
-            document.body.appendChild(welcomeModal);
-            document.getElementById('closeWelcomeModal').onclick = function() {
-              welcomeModal.remove();
-            };
-            localStorage.setItem('welcomed_' + id, 'true');
-          }
-          // 로그인 기록 Airtable 저장
-          const logData = {
-            fields: {
-              herbalife_id: id,
-              name: name,
-              login_time: new Date().toISOString()
-            }
-          };
-          fetch('https://api.airtable.com/v0/appAHmDSvu3AVoBMN/login_logs', {
-            method: 'POST',
-            headers: {
-              'Authorization': `Bearer patfyiX4h33ZcZopN.952737b1246b7e8f4b8093bb308df2cdac3af1f9573696b4c5af6981f63374b4`,
-              'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(logData)
-          });
-        } else if (approved === '불가') {
-          alert('승인되지 않은 계정입니다. 관리자에게 문의하세요.');
-        } else if (approved === '차단') {
-          // 차단 안내 모달 표시
-          const blockModal = document.createElement('div');
-          blockModal.style.position = 'fixed';
-          blockModal.style.left = '0';
-          blockModal.style.top = '0';
-          blockModal.style.width = '100vw';
-          blockModal.style.height = '100vh';
-          blockModal.style.background = 'rgba(0,0,0,0.25)';
-          blockModal.style.zIndex = '9999';
-          blockModal.style.display = 'flex';
-          blockModal.style.justifyContent = 'center';
-          blockModal.style.alignItems = 'center';
-          blockModal.innerHTML = `
-            <div style="background:#fff; border-radius:18px; max-width:350px; width:90vw; padding:2.2rem 1.2rem 1.5rem; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.18); position:relative;">
-              <div style="font-size:1.13rem; color:#025937; font-weight:600; margin-bottom:1.2rem;">이용이 잠시 중단되었습니다.<br>관리자에게 문의 바랍니다.</div>
-              <div style="display:flex; justify-content:center; gap:12px; margin-top:10px;">
-                <button id="closeBlockModal" style="background:#025937; color:#fff; border:none; border-radius:8px; padding:0.6rem 1.5rem; font-size:1rem; font-weight:500; cursor:pointer;">확인</button>
-                <button id="blockInquiryBtn" style="background:#fff; color:#025937; border:1.5px solid #025937; border-radius:8px; padding:0.6rem 1.5rem; font-size:1rem; font-weight:500; cursor:pointer;">1:1 문의하기</button>
-              </div>
-            </div>
-          `;
-          document.body.appendChild(blockModal);
-          document.getElementById('closeBlockModal').onclick = function() {
-            blockModal.remove();
-          };
-          document.getElementById('blockInquiryBtn').onclick = function() {
-            window.open('https://open.kakao.com/me/fitcouple', '_blank');
-          };
-        } else {
-          alert('아직 관리자의 승인을 기다리고 있습니다.');
-        }
-        return false;
-      };
-    }
-
-    // 회원가입/로그인 폼 전환 기능 추가
-    document.getElementById('showSignup').onclick = function() {
-      document.querySelector('#loginModal form').style.display = 'none';
-      document.getElementById('signupForm').style.display = 'flex';
-      document.getElementById('loginTitle').textContent = '회원가입';
-      document.getElementById('loginDesc').textContent = '고유의 허벌라이프ID와 멤버본인이름으로 가입하세요';
-    };
-    document.getElementById('showLogin').onclick = function() {
-      document.querySelector('#loginModal form').style.display = 'flex';
-      document.getElementById('signupForm').style.display = 'none';
-      document.getElementById('loginTitle').textContent = '로그인';
-      document.getElementById('loginDesc').textContent = '허벌라이프ID와 멤버이름으로 로그인하세요';
-    };
-    // 닫기(X) 버튼 클릭 시 모달 닫기 및 로그인 폼 초기화
-    document.getElementById('closeModal').onclick = function() {
-      document.getElementById('loginModal').style.display = 'none';
-      // 모든 form을 숨기고 로그인 폼만 보이게 초기화
-      var forms = document.querySelectorAll('#loginModal form');
-      forms.forEach(f => f.style.display = 'none');
-      if (document.querySelector('#loginModal form')) {
-        document.querySelector('#loginModal form').style.display = 'flex';
-      }
-      document.getElementById('signupForm').style.display = 'none';
-      // 타이틀도 로그인으로 복원
-      var loginTitle = document.getElementById('loginTitle');
-      if (loginTitle) loginTitle.textContent = '로그인';
-      var loginDesc = document.getElementById('loginDesc');
-      if (loginDesc) loginDesc.textContent = '허벌라이프ID와 멤버이름으로 로그인하세요';
-    };
-    // 회원가입 폼 제출 처리
-    var signupForm = document.getElementById('signupForm');
-    signupForm.onsubmit = async function(e) {
-      e.preventDefault();
-      var name = this.querySelector('input[placeholder="멤버이름"]').value;
-      var team = this.querySelector('select[placeholder="팀위치"]').value;
-      var boss = this.querySelector('select[placeholder="상위사장님"]').value;
-      var id = this.querySelector('input[placeholder="허벌라이프ID"]').value;
-      if (!name || !team || !boss || !id) {
-        alert('모든 항목을 입력해 주세요.');
-        return false;
-      }
-      // Airtable 중복/대기/승인/불가 체크
-      const AIRTABLE_API_KEY = 'patfyiX4h33ZcZopN.952737b1246b7e8f4b8093bb308df2cdac3af1f9573696b4c5af6981f63374b4';
-      const AIRTABLE_BASE_ID = 'appAHmDSvu3AVoBMN';
-      const AIRTABLE_TABLE_NAME = 'tbluQFiRPVXzP50iV';
-      const filter = `{herbalife_id}='${id}'`;
-      const url = `https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}?filterByFormula=${encodeURIComponent(filter)}`;
-      try {
-        const res = await fetch(url, { headers: { 'Authorization': `Bearer ${AIRTABLE_API_KEY}` } });
-        const data = await res.json();
-        if (data.records.length > 0) {
-          alert('이미 회원가입 신청이 진행중입니다');
-          return false;
-        }
-        // 신규 회원가입 요청
-        const dataToSend = {
-          fields: {
-            herbalife_id: id,
-            name: name,
-            team_label: team,
-            upline: boss
-          }
-        };
-        const res2 = await fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`, {
-          method: 'POST',
-          headers: {
-            'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify(dataToSend)
-        });
-        if (res2.ok) {
-          alert('회원가입이 완료되었습니다! 승인 후 이용 가능합니다.');
-          document.getElementById('loginModal').style.display = 'none';
-        } else {
-          alert('회원가입에 실패했습니다. 다시 시도해 주세요.');
-        }
-      } catch (err) {
-        alert('회원가입 중 오류가 발생했습니다.');
-      }
-      return false;
-    };
-
-    // 카테고리 카드 클릭 제어
-    function handleCategoryClick(e, url) {
-      if (localStorage.getItem('isLoggedIn') !== 'true') {
-        e.preventDefault();
-        document.getElementById('alertModal').style.display = 'flex';
-        return false;
-      }
-      if (url) window.open(url, '_blank');
-    }
-    // 모든 카테고리 카드에 클릭 이벤트 적용
-    window.addEventListener('DOMContentLoaded', function() {
-      var cards = document.querySelectorAll('.category-card');
-      cards.forEach(function(card) {
-        var productEdu = card.querySelector('h3') && card.querySelector('h3').textContent.includes('제/품/교/육');
-        var aiPodcast = card.querySelector('h3') && card.querySelector('h3').textContent.includes('Ai건강팟캐스트');
-        var coachEdu = card.querySelector('h3') && card.querySelector('h3').textContent.includes('코/치/교/육');
-        var customerCase = card.querySelector('h3') && card.querySelector('h3').textContent.includes('고/객/사/례');
-        var url = null;
-        if (productEdu) url = 'https://youtube.com/playlist?list=PLPSWMuklm8j2lN5m8MUhoT73iouhI1l5L&si=5OlSxYZSyMdTpZNH';
-        if (aiPodcast) url = 'https://youtube.com/playlist?list=PLPSWMuklm8j0BYWQaOfuaINuwvtyoviTV&si=cACTSg9_4bT06a2a';
-        if (coachEdu) url = 'https://youtube.com/playlist?list=PLPSWMuklm8j2Nsrw0MriCiZtMYY_PL8Ii&si=TznMIImnShtNQ6gH';
-        if (customerCase) url = 'https://youtube.com/playlist?list=PLPSWMuklm8j1C3jacgnycMteKW8_TnVZP&si=CKDfM0aSZkHpLhPw'; // 최신 링크
-        card.onclick = function(e) {
-          if (productEdu) {
-            if (localStorage.getItem('isLoggedIn') === 'true') {
-              window.open(url, '_blank');
-              return;
-            } else {
-              e.preventDefault();
-              document.getElementById('alertModal').style.display = 'flex';
-              return false;
-            }
-          }
-          if (coachEdu) {
-            if (localStorage.getItem('isLoggedIn') === 'true') {
-              window.open(url, '_blank');
-              return;
-            } else {
-              e.preventDefault();
-              document.getElementById('alertModal').style.display = 'flex';
-              return false;
-            }
-          }
-          if (customerCase) {
-            if (localStorage.getItem('isLoggedIn') === 'true') {
-              window.open(url, '_blank');
-              return;
-            } else {
-              e.preventDefault();
-              document.getElementById('alertModal').style.display = 'flex';
-              return false;
-            }
-          }
-          handleCategoryClick(e, url);
-        };
-        card.style.cursor = 'pointer';
-      });
-    });
-    // 영상 보기 버튼 클릭 제어
-    function handleVideoClick(e, url) {
-      if (localStorage.getItem('isLoggedIn') !== 'true') {
-        e.preventDefault();
-        document.getElementById('alertModal').style.display = 'flex';
-        return false;
-      }
-      window.open(url, '_blank');
-    }
-
-    document.addEventListener('DOMContentLoaded', function() {
-      var closeAlertBtn = document.getElementById('closeAlertModal');
-      if(closeAlertBtn) {
-        closeAlertBtn.onclick = function() {
-          document.getElementById('alertModal').style.display = 'none';
-        };
-      }
-      var loginBtn = document.getElementById('alertLoginBtn');
-      if(loginBtn) {
-        loginBtn.onclick = function() {
-          document.getElementById('alertModal').style.display = 'none';
-          document.getElementById('loginModal').style.display = 'flex';
-          document.querySelector('#loginModal form').style.display = 'flex';
-          document.getElementById('signupForm').style.display = 'none';
-        };
-      }
-      var signupBtn = document.getElementById('alertSignupBtn');
-      if(signupBtn) {
-        signupBtn.onclick = function() {
-          document.getElementById('alertModal').style.display = 'none';
-          document.getElementById('loginModal').style.display = 'flex';
-          document.querySelector('#loginModal form').style.display = 'none';
-          document.getElementById('signupForm').style.display = 'flex';
-        };
-      }
-    });
-
-    // =========================
-    // [자동 로그아웃 타이머 기능 추가]
-    // =========================
-    let logoutTimer = null;
-    let warningTimer = null;
-    let isWatchingVideo = false;
-    const AUTO_LOGOUT_MS = 60 * 60 * 1000; // 1시간
-    const WARNING_BEFORE_MS = 5 * 60 * 1000; // 5분 전
-
-    function resetLogoutTimer() {
-      if (logoutTimer) clearTimeout(logoutTimer);
-      if (warningTimer) clearTimeout(warningTimer);
-      if (localStorage.getItem('isLoggedIn') !== 'true' || isWatchingVideo) return;
-      // 5분 전 경고
-      warningTimer = setTimeout(showLogoutWarning, AUTO_LOGOUT_MS - WARNING_BEFORE_MS);
-      // 1시간 후 자동 로그아웃
-      logoutTimer = setTimeout(autoLogout, AUTO_LOGOUT_MS);
-    }
-
-    function autoLogout() {
-      setLoginState(false);
-      syncLoginBtnText();
-      clearLoginInputs();
-      hideLogoutWarning();
-      alert('1시간 동안 활동이 없어 자동 로그아웃 되었습니다.');
-    }
-
-    function showLogoutWarning() {
-      if (document.getElementById('logoutWarningModal')) return;
-      const modal = document.createElement('div');
-      modal.id = 'logoutWarningModal';
-      modal.style.position = 'fixed';
-      modal.style.left = '0';
-      modal.style.top = '0';
-      modal.style.width = '100vw';
-      modal.style.height = '100vh';
-      modal.style.background = 'rgba(0,0,0,0.25)';
-      modal.style.zIndex = '9999';
-      modal.style.display = 'flex';
-      modal.style.justifyContent = 'center';
-      modal.style.alignItems = 'center';
-      modal.innerHTML = `
-        <div style="background:#fff; border-radius:18px; max-width:350px; width:90vw; padding:2.2rem 1.2rem 1.5rem; text-align:center; box-shadow:0 8px 32px rgba(0,0,0,0.18); position:relative;">
-          <div style="font-size:1.13rem; color:#025937; font-weight:600; margin-bottom:1.2rem;">5분 후 자동 로그아웃 됩니다.<br>계속 이용하려면 아무 곳이나 클릭하세요.</div>
-          <button id="closeLogoutWarning" style="background:#025937; color:#fff; border:none; border-radius:8px; padding:0.6rem 1.5rem; font-size:1rem; font-weight:500; cursor:pointer;">확인</button>
         </div>
-      `;
-      document.body.appendChild(modal);
-      document.getElementById('closeLogoutWarning').onclick = function() {
-        hideLogoutWarning();
-        resetLogoutTimer();
-      };
-      // 아무 곳이나 클릭 시 경고 닫고 타이머 리셋
-      modal.onclick = function(e) {
-        if (e.target === modal) {
-          hideLogoutWarning();
-          resetLogoutTimer();
-        }
-      };
-    }
-    function hideLogoutWarning() {
-      const modal = document.getElementById('logoutWarningModal');
-      if (modal) modal.remove();
-    }
+        <div class="video-section">
+          <div class="section-header">
+            <div class="skeleton" style="width:140px;height:22px;border-radius:6px;"></div>
+          </div>
+          <div class="card-row-outer">
+            <div class="card-row-scroll">
+              ${[1,2,3,4,5].map(() => '<div class="skeleton skeleton-card"></div>').join('')}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
 
-    // 사용자 입력 이벤트에 타이머 리셋
-    ['click','mousemove','keydown','touchstart','scroll'].forEach(evt => {
-      window.addEventListener(evt, resetLogoutTimer, true);
-    });
+  </div>
 
-    // 로그인/로그아웃 시 타이머 관리
-    const _setLoginState = setLoginState;
-    setLoginState = function(loggedIn) {
-      _setLoginState(loggedIn);
-      if (loggedIn) {
-        resetLogoutTimer();
-      } else {
-        if (logoutTimer) clearTimeout(logoutTimer);
-        if (warningTimer) clearTimeout(warningTimer);
-        hideLogoutWarning();
-      }
+  <!-- Footer -->
+  <footer id="footerSection">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>Nutrition Insight+</h4>
+        <p>허벌라이프 코치 전용<br>프리미엄 웰니스 스트리밍 플랫폼</p>
+        <p style="margin-top:10px;">운영: 로빈코치 · 10년차 웰니스코치</p>
+      </div>
+      <div class="footer-col">
+        <h4>콘텐츠</h4>
+        <a href="#">AI건강팟캐스트</a>
+        <a href="#">코치교육</a>
+        <a href="#">제품교육</a>
+        <a href="#">건강정보</a>
+        <a href="#">고객사례</a>
+      </div>
+      <div class="footer-col">
+        <h4>지원</h4>
+        <a href="https://open.kakao.com/me/fitcouple" target="_blank">1:1 문의</a>
+        <a href="https://open.kakao.com/me/fitcouple" target="_blank">피드백</a>
+        <a href="https://youtube.com/@bubudiet" target="_blank">유튜브 채널</a>
+      </div>
+      <div class="footer-col">
+        <h4>연락처</h4>
+        <p><i class="fas fa-phone" style="width:16px"></i> 010.8003.0722</p>
+        <p><i class="fas fa-envelope" style="width:16px"></i> hebalbubu@gmail.com</p>
+        <p><i class="fas fa-map-marker-alt" style="width:16px"></i> 군산시 의료원로</p>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      © Nutrition Insight+ · 허벌라이프 코치 전용 프리미엄 웰니스 콘텐츠 플랫폼
+    </div>
+  </footer>
+</main>
+
+<!-- ============================== MODALS ============================== -->
+
+<!-- Alert (비로그인 접근) -->
+<div class="modal-bg" id="alertModal">
+  <div class="modal-box">
+    <div class="alert-icon">🔒</div>
+    <p class="alert-msg">이 콘텐츠는 정식 코치만 이용 가능합니다.<br>로그인 후 시청하세요.</p>
+    <div class="alert-actions">
+      <button class="alert-btn primary" onclick="closeAlert();openLoginModal()">로그인</button>
+      <button class="alert-btn secondary" onclick="closeAlert();openLoginModal('signup')">회원가입</button>
+    </div>
+  </div>
+</div>
+
+<!-- Estimate -->
+<div class="modal-bg" id="estimateModal">
+  <div class="modal-box">
+    <div class="modal-header">
+      <span class="modal-title">📋 제품 견적서</span>
+      <button class="modal-close" onclick="closeModal('estimateModal')">&times;</button>
+    </div>
+    <div class="estimate-table-wrap">
+      <table class="estimate-table">
+        <thead id="estimateHead"></thead>
+        <tbody id="estimateBody"></tbody>
+      </table>
+    </div>
+    <div class="estimate-total" id="estimateTotal"></div>
+    <button class="auth-submit" onclick="closeModal('estimateModal')">닫기</button>
+  </div>
+</div>
+
+<!-- Toast -->
+<div id="toast"></div>
+
+<!-- Logout warning -->
+<div id="logoutWarning" style="display:none;">
+  <p class="lw-msg">⚠️ <span>5분 후</span> 자동 로그아웃됩니다.</p>
+  <button class="lw-btn" onclick="resetLogoutTimer();document.getElementById('logoutWarning').style.display='none'">계속 이용하기</button>
+</div>
+
+<!-- ============================== SCRIPTS ============================== -->
+<script>
+/* ============================================================
+   CONFIG
+============================================================ */
+const API_KEY = 'AIzaSyDyx75uISUhEE6kKPFArUFfYtF2pcWDfWU';
+const PLAYLIST_IDS = [
+  'PLPSWMuklm8j0BYWQaOfuaINuwvtyoviTV',
+  'PLPSWMuklm8j2Nsrw0MriCiZtMYY_PL8Ii',
+  'PLPSWMuklm8j2lN5m8MUhoT73iouhI1l5L',
+  'PLPSWMuklm8j35-rWI85gjbodU_H_PVNxt',
+  'PLPSWMuklm8j2GeFloktCmL_yj3L9MKYlL',
+  'PLPSWMuklm8j1OlWjzxF0UQHEDX6B441ES',
+  'PLPSWMuklm8j1C3jacgnycMteKW8_TnVZP'
+];
+// Playlist → Category mapping
+const PLAYLIST_CAT = {
+  'PLPSWMuklm8j0BYWQaOfuaINuwvtyoviTV': 'ai팟캐스트',
+  'PLPSWMuklm8j2Nsrw0MriCiZtMYY_PL8Ii': '코치교육',
+  'PLPSWMuklm8j2lN5m8MUhoT73iouhI1l5L': '제품교육',
+  'PLPSWMuklm8j35-rWI85gjbodU_H_PVNxt': '다이어트',
+  'PLPSWMuklm8j2GeFloktCmL_yj3L9MKYlL': '건강정보',
+  'PLPSWMuklm8j1OlWjzxF0UQHEDX6B441ES': '건강정보',
+  'PLPSWMuklm8j1C3jacgnycMteKW8_TnVZP': '고객사례'
+};
+const SECTION_META = {
+  'ai팟캐스트': { label:'AI 건강팟캐스트', icon:'🎙️' },
+  '코치교육':   { label:'코치교육', icon:'📚' },
+  '제품교육':   { label:'제품교육', icon:'💊' },
+  '다이어트':   { label:'다이어트 · 체중관리', icon:'⚡' },
+  '건강정보':   { label:'건강정보', icon:'🩺' },
+  '고객사례':   { label:'고객 성공사례', icon:'⭐' }
+};
+
+const AT_KEY  = 'patfyiX4h33ZcZopN.952737b1246b7e8f4b8093bb308df2cdac3af1f9573696b4c5af6981f63374b4';
+const AT_BASE = 'appAHmDSvu3AVoBMN';
+const AT_USERS_TABLE = 'tbluQFiRPVXzP50iV';
+const AT_LOG_TABLE   = 'activity_logs';
+const AT_LOGIN_TABLE = 'login_logs';
+
+let videos = [];
+let currentCat = 'all';
+
+/* ============================================================
+   AUTH STATE
+============================================================ */
+function isLoggedIn() {
+  return localStorage.getItem('isLoggedIn') === 'true';
+}
+function applyAuthVisibility() {
+  const loggedIn = isLoggedIn();
+  document.getElementById('authWall').style.display  = loggedIn ? 'none' : 'flex';
+  document.getElementById('mainContent').style.display = loggedIn ? 'block' : 'none';
+  const lb = document.getElementById('loginBtn');
+  lb.textContent = loggedIn ? '로그아웃' : '로그인';
+  lb.className = loggedIn ? 'logged-in' : '';
+  document.getElementById('mobileLoginLabel').textContent = loggedIn ? '로그아웃' : '로그인';
+}
+function setLogin(state) {
+  if (state) localStorage.setItem('isLoggedIn', 'true');
+  else { localStorage.removeItem('isLoggedIn'); }
+  applyAuthVisibility();
+  if (state) { resetLogoutTimer(); loadVideos(); }
+  else { if (logoutTimer) clearTimeout(logoutTimer); if (warnTimer) clearTimeout(warnTimer); }
+}
+function handleLoginBtnClick() {
+  if (isLoggedIn()) {
+    setLogin(false);
+    showToast('로그아웃 되었습니다.');
+  } else {
+    // already on auth wall
+    window.scrollTo(0,0);
+  }
+}
+
+/* ============================================================
+   AUTH FORMS
+============================================================ */
+function switchTab(tab) {
+  document.getElementById('paneLogin').classList.toggle('active', tab==='login');
+  document.getElementById('paneSignup').classList.toggle('active', tab==='signup');
+  document.getElementById('tabLogin').classList.toggle('active', tab==='login');
+  document.getElementById('tabSignup').classList.toggle('active', tab==='signup');
+}
+function openLoginModal(tab='login') { switchTab(tab); window.scrollTo(0,0); }
+
+async function doLogin() {
+  const id   = document.getElementById('loginId').value.trim();
+  const name = document.getElementById('loginName').value.trim();
+  const err  = document.getElementById('loginErr');
+  const btn  = document.getElementById('loginBtnText');
+  err.textContent = '';
+  if (!id || !name) { err.textContent = '허벌라이프 ID와 이름을 입력하세요.'; return; }
+  btn.textContent = '확인 중…';
+  try {
+    const filter = `AND(LOWER({herbalife_id})='${id.toLowerCase()}', LOWER({name})='${name.toLowerCase()}')`;
+    const url = `https://api.airtable.com/v0/${AT_BASE}/${encodeURIComponent(AT_USERS_TABLE)}?filterByFormula=${encodeURIComponent(filter)}`;
+    const res = await fetch(url, { headers:{ 'Authorization':'Bearer '+AT_KEY } });
+    const data = await res.json();
+    if (!data.records || data.records.length === 0) {
+      err.textContent = '가입 정보가 없습니다. 회원가입을 먼저 진행해 주세요.'; return;
     }
-
-    // 영상 시청(새창) 중 타이머 일시정지/재개
-    window.handleVideoClick = function(e, url) {
-      if (localStorage.getItem('isLoggedIn') !== 'true') {
-        e.preventDefault();
-        document.getElementById('alertModal').style.display = 'flex';
-        return false;
-      }
-      isWatchingVideo = true;
-      if (logoutTimer) clearTimeout(logoutTimer);
-      if (warningTimer) clearTimeout(warningTimer);
-      const win = window.open(url, '_blank');
-      // 새창 닫힐 때 타이머 재개
-      const poll = setInterval(() => {
-        if (win.closed) {
-          clearInterval(poll);
-          isWatchingVideo = false;
-          resetLogoutTimer();
-        }
-      }, 1000);
-    }
-
-    // =========================
-    // [Airtable 활동 로그 기록 기능 추가]
-    // =========================
-    function saveActivityLog(type, extra) {
-      if (localStorage.getItem('isLoggedIn') !== 'true') return;
-      // 최근 로그인한 id, name을 localStorage에 저장해두고 사용
-      let id = localStorage.getItem('lastLoginId');
-      let name = localStorage.getItem('lastLoginName');
-      if (!id || !name) return;
-      const AIRTABLE_API_KEY = 'patfyiX4h33ZcZopN.952737b1246b7e8f4b8093bb308df2cdac3af1f9573696b4c5af6981f63374b4';
-      const AIRTABLE_BASE_ID = 'appAHmDSvu3AVoBMN';
-      const AIRTABLE_TABLE_NAME = 'activity_logs';
-      const logData = {
-        fields: {
-          herbalife_id: id,
-          name: name,
-          activity_type: type,
-          activity_time: new Date().toISOString(),
-          extra_info: extra || ''
-        }
-      };
-      fetch(`https://api.airtable.com/v0/${AIRTABLE_BASE_ID}/${encodeURIComponent(AIRTABLE_TABLE_NAME)}`, {
-        method: 'POST',
-        headers: {
-          'Authorization': `Bearer ${AIRTABLE_API_KEY}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(logData)
+    const approved = data.records[0].fields.approved;
+    if (approved === '승인') {
+      localStorage.setItem('lastLoginId', id);
+      localStorage.setItem('lastLoginName', name);
+      setLogin(true);
+      fetch(`https://api.airtable.com/v0/${AT_BASE}/${AT_LOGIN_TABLE}`, {
+        method:'POST', headers:{'Authorization':'Bearer '+AT_KEY,'Content-Type':'application/json'},
+        body:JSON.stringify({ fields:{ herbalife_id:id, name, login_time:new Date().toISOString() } })
       });
-    }
-
-    // 1. 사이트 접속(페이지 로드) 시 활동 로그 기록
-    document.addEventListener('DOMContentLoaded', function() {
-      if (localStorage.getItem('isLoggedIn') === 'true') {
-        saveActivityLog('접속', '');
+      if (!localStorage.getItem('welcomed_'+id)) {
+        localStorage.setItem('welcomed_'+id,'true');
+        showToast('✅ 환영합니다! 정식 이용이 가능합니다.');
       }
+    } else if (approved === '불가')  { err.textContent = '승인되지 않은 계정입니다. 관리자에게 문의하세요.'; }
+    else if (approved === '차단') {
+      err.textContent = '이용이 잠시 중단되었습니다.';
+      setTimeout(()=>window.open('https://open.kakao.com/me/fitcouple','_blank'),1500);
+    }
+    else { err.textContent = '관리자의 승인을 기다리고 있습니다. 잠시만 기다려 주세요.'; }
+  } catch(e) { err.textContent = '오류가 발생했습니다. 잠시 후 다시 시도해 주세요.'; }
+  finally { btn.textContent = '로그인'; }
+}
+async function doSignup() {
+  const id   = document.getElementById('signupId').value.trim();
+  const name = document.getElementById('signupName').value.trim();
+  const team = document.getElementById('signupTeam').value;
+  const up   = document.getElementById('signupUpline').value;
+  const err  = document.getElementById('signupErr');
+  const btn  = document.getElementById('signupBtnText');
+  err.textContent = '';
+  if (!id||!name||!team||!up) { err.textContent = '모든 항목을 입력해 주세요.'; return; }
+  btn.textContent = '처리 중…';
+  try {
+    const filter = `{herbalife_id}='${id}'`;
+    const checkUrl = `https://api.airtable.com/v0/${AT_BASE}/${encodeURIComponent(AT_USERS_TABLE)}?filterByFormula=${encodeURIComponent(filter)}`;
+    const chkRes = await fetch(checkUrl, { headers:{'Authorization':'Bearer '+AT_KEY} });
+    const chkData = await chkRes.json();
+    if (chkData.records && chkData.records.length > 0) { err.textContent = '이미 회원가입 신청이 진행 중입니다.'; return; }
+    const postRes = await fetch(`https://api.airtable.com/v0/${AT_BASE}/${encodeURIComponent(AT_USERS_TABLE)}`, {
+      method:'POST', headers:{'Authorization':'Bearer '+AT_KEY,'Content-Type':'application/json'},
+      body:JSON.stringify({ fields:{ herbalife_id:id, name, team_label:team, upline:up } })
     });
-    // 2. 검색 시 활동 로그 기록
-    document.getElementById('searchInput').addEventListener('input', function(e) {
-      if (localStorage.getItem('isLoggedIn') === 'true' && e.target.value) {
-        saveActivityLog('검색', e.target.value);
-      }
-    });
-    // 3. 영상 보기 버튼 클릭 시 활동 로그 기록 (handleVideoClick 내부)
-    window.handleVideoClick = function(e, url) {
-      if (localStorage.getItem('isLoggedIn') !== 'true') {
-        e.preventDefault();
-        document.getElementById('alertModal').style.display = 'flex';
-        return false;
-      }
-      // 영상 제목 추출 (url에서 id 추출 후 videos 배열에서 찾기)
-      let videoTitle = '';
-      if (typeof videos !== 'undefined' && Array.isArray(videos)) {
-        const vid = videos.find(v => v.url === url);
-        if (vid) videoTitle = vid.title;
-      }
-      saveActivityLog('영상보기', videoTitle);
-      isWatchingVideo = true;
-      if (logoutTimer) clearTimeout(logoutTimer);
-      if (warningTimer) clearTimeout(warningTimer);
-      const win = window.open(url, '_blank');
-      // 새창 닫힐 때 타이머 재개
-      const poll = setInterval(() => {
-        if (win.closed) {
-          clearInterval(poll);
-          isWatchingVideo = false;
-          resetLogoutTimer();
-        }
-      }, 1000);
-    }
+    if (postRes.ok) {
+      showToast('✅ 회원가입 신청 완료! 승인 후 이용 가능합니다.');
+      switchTab('login');
+    } else { err.textContent = '회원가입에 실패했습니다. 다시 시도해 주세요.'; }
+  } catch(e) { err.textContent = '오류가 발생했습니다. 잠시 후 다시 시도해 주세요.'; }
+  finally { btn.textContent = '회원가입 신청'; }
+}
 
-    // 제품 데이터 (표에서 추출, 일부 예시)
-    const productList = [
-      { name: 'Formula 1 건강한 식사', consumerPrice: 63000, distributorPrice: 47261 },
-      { name: 'Formula 2 멀티비타민·무기질 컴플렉스', consumerPrice: 33300, distributorPrice: 24995 },
-      { name: 'Formula 3 퍼스널 단백질 파우더', consumerPrice: 65600, distributorPrice: 49619 },
-      { name: 'Formula 1 쿠키앤크림맛 번들팩', consumerPrice: 66000, distributorPrice: 49490 },
-      { name: '면역튼튼 알로에겔 세트', consumerPrice: 307900, distributorPrice: 230987 },
-      { name: '마이문 플러스', consumerPrice: 65500, distributorPrice: 49520 },
-      { name: '홍삼 진센 젤', consumerPrice: 187600, distributorPrice: 140688 },
-      { name: '나이트웍스® 비타민 C, E, 엽산', consumerPrice: 113000, distributorPrice: 84783 },
-      { name: '프로레사 듀오', consumerPrice: 202200, distributorPrice: 151639 },
-      { name: '허벌 베버리지 릴렉세이션 티', consumerPrice: 77300, distributorPrice: 58125 },
-      { name: '셀-유-로쓰', consumerPrice: 32800, distributorPrice: 24600 },
-      { name: '키토산 플러스', consumerPrice: 99000, distributorPrice: 74325 },
-      { name: '리프트오프® 오렌지향', consumerPrice: 103000, distributorPrice: 77438 },
-      { name: '트리플 헬스 드링크(10병)', consumerPrice: 61700, distributorPrice: 46300 },
-      { name: '엔-알-지 티', consumerPrice: 34700, distributorPrice: 26000 },
-      { name: '프로틴 바 디럭스', consumerPrice: 58200, distributorPrice: 43837 },
-      { name: '허벌 알로에 겔', consumerPrice: 51300, distributorPrice: 38625 },
-      { name: '액티브 화이버 컴플렉스', consumerPrice: 53000, distributorPrice: 39900 },
-      { name: '프로바이오틱 컴플렉스 플러스', consumerPrice: 85600, distributorPrice: 64400 },
-      { name: '허벌 코큐텐 플러스', consumerPrice: 86100, distributorPrice: 64875 },
-      { name: '허벌라이프라인 오메가-3', consumerPrice: 60700, distributorPrice: 45700 },
-      { name: '감마리놀렌산 플러스', consumerPrice: 94100, distributorPrice: 70875 },
-      { name: '와이즈 케어', consumerPrice: 62800, distributorPrice: 47250 },
-      { name: '피크노® 플러스', consumerPrice: 102700, distributorPrice: 77250 },
-      { name: '콜라겐 뷰티 파우더', consumerPrice: 101200, distributorPrice: 76125 },
-      { name: '허바플렉스 글루코사민', consumerPrice: 97500, distributorPrice: 73425 },
-      { name: '칼슘 플러스 비타민 D', consumerPrice: 35500, distributorPrice: 26700 },
-      { name: '헬씨 아이', consumerPrice: 89200, distributorPrice: 67000 },
-      { name: '셀레늄 플러스', consumerPrice: 34700, distributorPrice: 26000 },
-      { name: 'Formula 1 스포츠', consumerPrice: 96400, distributorPrice: 72300 },
-      { name: '리빌드 스트랭쓰', consumerPrice: 156300, distributorPrice: 117207 },
-      { name: '씨알세븐 드라이브', consumerPrice: 57200, distributorPrice: 42918 },
-      { name: '스포츠 프로그램', consumerPrice: 309900, distributorPrice: 232433 },
-      { name: '나이트웍스®선물세트(2개입)', consumerPrice: 226000, distributorPrice: 169464 },
-      { name: '티 선물세트', consumerPrice: 116400, distributorPrice: 87263 }
-    ];
-
-    // 팝업 열기/닫기
-    const estimateBtn = document.getElementById('estimateBtn');
-    const estimateModal = document.getElementById('estimateModal');
-    const closeEstimateModal = document.getElementById('closeEstimateModal');
-    const estimateCloseBtn = document.getElementById('estimateCloseBtn');
-    const estimateTableBody = document.getElementById('estimateTableBody');
-    const estimateTableHead = document.getElementById('estimateTableHead');
-    const estimateTotalWrap = document.getElementById('estimateTotalWrap');
-
-    function renderEstimateTable() {
-      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-      let totalConsumer = 0;
-      let totalDistributor = 0;
-      // 테이블 헤더
-      estimateTableHead.innerHTML = isLoggedIn ?
-        `<tr style="background:#e6f4ea; color:#025937;"><th style='padding:7px 2px;'>제품명</th><th style='padding:7px 2px;'>소비자가격</th><th style='padding:7px 2px;'>디스트리뷰터가격</th><th style='padding:7px 2px;'>수량</th><th style='padding:7px 2px;'>합계(소비자)</th><th style='padding:7px 2px;'>합계(디스트리뷰터)</th></tr>`
-        :
-        `<tr style="background:#e6f4ea; color:#025937;"><th style='padding:7px 2px;'>제품명</th><th style='padding:7px 2px;'>소비자가격</th><th style='padding:7px 2px;'>수량</th><th style='padding:7px 2px;'>합계</th></tr>`;
-      // 테이블 바디
-      estimateTableBody.innerHTML = '';
-      productList.forEach((item, idx) => {
-        if (isLoggedIn) {
-          estimateTableBody.innerHTML += `
-            <tr>
-              <td style='padding:6px 2px; text-align:left;'>${item.name}</td>
-              <td style='padding:6px 2px; text-align:right;'>${item.consumerPrice.toLocaleString()}원</td>
-              <td style='padding:6px 2px; text-align:right;'>${item.distributorPrice.toLocaleString()}원</td>
-              <td style='padding:6px 2px; text-align:center;'><input type='number' min='0' value='0' style='width:48px; text-align:right; border-radius:6px; border:1px solid #bbb; padding:2px 4px;' data-idx='${idx}'></td>
-              <td style='padding:6px 2px; text-align:right;' id='itemSumC${idx}'>0원</td>
-              <td style='padding:6px 2px; text-align:right;' id='itemSumD${idx}'>0원</td>
-            </tr>
-          `;
-        } else {
-          estimateTableBody.innerHTML += `
-            <tr>
-              <td style='padding:6px 2px; text-align:left;'>${item.name}</td>
-              <td style='padding:6px 2px; text-align:right;'>${item.consumerPrice.toLocaleString()}원</td>
-              <td style='padding:6px 2px; text-align:center;'><input type='number' min='0' value='0' style='width:48px; text-align:right; border-radius:6px; border:1px solid #bbb; padding:2px 4px;' data-idx='${idx}'></td>
-              <td style='padding:6px 2px; text-align:right;' id='itemSumC${idx}'>0원</td>
-            </tr>
-          `;
-        }
-      });
-      updateEstimateTotal();
-    }
-
-    function updateEstimateTotal() {
-      const isLoggedIn = localStorage.getItem('isLoggedIn') === 'true';
-      let totalConsumer = 0;
-      let totalDistributor = 0;
-      productList.forEach((item, idx) => {
-        const qty = Number(document.querySelector(`input[data-idx='${idx}']`).value);
-        const sumC = qty * item.consumerPrice;
-        document.getElementById(`itemSumC${idx}`).textContent = sumC ? sumC.toLocaleString() + '원' : '0원';
-        totalConsumer += sumC;
-        if (isLoggedIn) {
-          const sumD = qty * item.distributorPrice;
-          document.getElementById(`itemSumD${idx}`).textContent = sumD ? sumD.toLocaleString() + '원' : '0원';
-          totalDistributor += sumD;
-        }
-      });
-      estimateTotalWrap.innerHTML = isLoggedIn
-        ? `총 견적: <span style='color:#025937;'>${totalConsumer.toLocaleString()}원</span> / <span style='color:#008f45;'>${totalDistributor.toLocaleString()}원 (디스트리뷰터)</span>`
-        : `총 견적: <span style='color:#025937;'>${totalConsumer.toLocaleString()}원</span>`;
-    }
-
-    estimateBtn.onclick = function(e) {
-      e.preventDefault();
-      if (localStorage.getItem('isLoggedIn') !== 'true') {
-        document.getElementById('alertModal').style.display = 'flex';
-        return;
-      }
-      estimateModal.style.display = 'flex';
-      renderEstimateTable();
-    };
-    closeEstimateModal.onclick = estimateCloseBtn.onclick = function() {
-      estimateModal.style.display = 'none';
-    };
-    estimateModal.onclick = function(e) {
-      if (e.target === estimateModal) estimateModal.style.display = 'none';
-    };
-    document.addEventListener('input', function(e) {
-      if (e.target && e.target.closest('#estimateTableBody input')) {
-        updateEstimateTotal();
-      }
-    });
-
-    document.addEventListener('DOMContentLoaded', function() {
-      var mobileEstimateBtn = document.getElementById('mobileEstimateBtn');
-      if (mobileEstimateBtn) {
-        mobileEstimateBtn.onclick = function() {
-          if (localStorage.getItem('isLoggedIn') !== 'true') {
-            document.getElementById('alertModal').style.display = 'flex';
-            return;
-          }
-          document.getElementById('estimateModal').style.display = 'flex';
-          window.estimateQuantities = Array(productList.length).fill(1);
-          renderEstimateTable();
-        };
-      }
+/* Enter key support */
+['loginId','loginName'].forEach(id => {
+  document.getElementById(id).addEventListener('keydown', e => { if(e.key==='Enter') doLogin(); });
 });
-    </script>
+
+/* ============================================================
+   YOUTUBE / VIDEO DATA
+============================================================ */
+async function fetchPlaylistVideos(playlistId) {
+  let all = [], token = '';
+  do {
+    const url = `https://www.googleapis.com/youtube/v3/playlistItems?part=snippet&maxResults=50&playlistId=${playlistId}&key=${API_KEY}${token?`&pageToken=${token}`:''}`;
+    const res = await fetch(url);
+    const data = await res.json();
+    if (data.items) all = all.concat(data.items);
+    token = data.nextPageToken || '';
+  } while(token);
+  return all
+    .filter(i => i.snippet?.resourceId && i.snippet?.thumbnails?.medium)
+    .map(i => ({
+      id: i.snippet.resourceId.videoId,
+      title: i.snippet.title,
+      description: i.snippet.description || '',
+      tags: [],
+      url: `https://www.youtube.com/watch?v=${i.snippet.resourceId.videoId}`,
+      embedUrl: `https://www.youtube.com/embed/${i.snippet.resourceId.videoId}`,
+      thumbnail: i.snippet.thumbnails.high?.url || i.snippet.thumbnails.medium.url,
+      uploadDate: (i.snippet.publishedAt||'').slice(0,10),
+      category: PLAYLIST_CAT[playlistId] || '기타'
+    }));
+}
+
+async function loadVideos() {
+  if (videos.length > 0) { renderBrowseFeed(); return; }
+  document.getElementById('loadingFeed').style.display = 'block';
+  document.getElementById('videoRows').innerHTML = '';
+  let all = [];
+  for (const pid of PLAYLIST_IDS) {
+    try { all = all.concat(await fetchPlaylistVideos(pid)); } catch(e) {}
+  }
+  // dedupe by id
+  const seen = new Set();
+  videos = all.filter(v => { if(seen.has(v.id)) return false; seen.add(v.id); return true; });
+  document.getElementById('loadingFeed').style.display = 'none';
+  renderBrowseFeed();
+  saveActivityLog('접속', '');
+}
+
+/* ============================================================
+   RENDER — BROWSE FEED (category rows)
+============================================================ */
+function renderBrowseFeed() {
+  const container = document.getElementById('videoRows');
+  container.innerHTML = '';
+  const cats = currentCat === 'all'
+    ? Object.keys(SECTION_META)
+    : [currentCat];
+  cats.forEach(cat => {
+    const list = videos.filter(v => v.category === cat);
+    if (!list.length) return;
+    const meta = SECTION_META[cat] || { label:cat, icon:'🎬' };
+    const rowId = 'row_'+cat.replace(/[^a-z0-9]/gi,'_');
+    const sec = document.createElement('div');
+    sec.className = 'video-section';
+    sec.innerHTML = `
+      <div class="section-header">
+        <div class="section-label">
+          <span>${meta.icon}</span> ${meta.label}
+        </div>
+        <span class="section-count">${list.length}개 영상</span>
+      </div>
+      <div class="card-row-outer">
+        <button class="row-arrow left" onclick="scrollRow('${rowId}',-1)"><i class="fas fa-chevron-left"></i></button>
+        <div class="card-row-scroll" id="${rowId}">
+          ${list.map(v => videoCardHTML(v)).join('')}
+        </div>
+        <button class="row-arrow right" onclick="scrollRow('${rowId}',1)"><i class="fas fa-chevron-right"></i></button>
+      </div>
+    `;
+    container.appendChild(sec);
+  });
+  if (!container.innerHTML) {
+    container.innerHTML = '<div class="empty-state"><i class="fas fa-film"></i><p>해당 카테고리 영상이 없습니다.</p></div>';
+  }
+}
+
+function scrollRow(rowId, dir) {
+  const el = document.getElementById(rowId);
+  if(el) el.scrollBy({ left: dir * 900, behavior:'smooth' });
+}
+
+/* ============================================================
+   RENDER — SEARCH RESULTS
+============================================================ */
+function renderSearch(keyword) {
+  const q = keyword.trim().toLowerCase();
+  const browseFeed = document.getElementById('browseFeed');
+  const searchSec  = document.getElementById('searchResultsSection');
+  const grid       = document.getElementById('searchGrid');
+  const bar        = document.getElementById('resultBar');
+  const guide      = document.getElementById('searchGuide');
+
+  if (!q) {
+    searchSec.style.display  = 'none';
+    browseFeed.style.display = 'block';
+    guide.textContent = '콘텐츠를 검색하거나 아래 카테고리를 둘러보세요.';
+    document.getElementById('clearSearch').style.display = 'none';
+    return;
+  }
+  document.getElementById('clearSearch').style.display = 'flex';
+  if (!isLoggedIn()) {
+    guide.textContent = '로그인 후 검색이 가능합니다.';
+    guide.style.color = 'var(--gold)';
+    return;
+  }
+  const words = q.split(/[\s,]+/).filter(Boolean);
+  let filtered = videos.filter(v =>
+    words.every(w =>
+      v.title.toLowerCase().includes(w) ||
+      v.description.toLowerCase().includes(w) ||
+      v.tags.some(t => t.toLowerCase().includes(w)) ||
+      v.category.toLowerCase().includes(w)
+    )
+  );
+  searchSec.style.display  = 'block';
+  browseFeed.style.display = 'none';
+  guide.textContent = '';
+  bar.innerHTML = `<strong>"${keyword}"</strong> 검색 결과 <strong>${filtered.length}개</strong>`;
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="empty-state" style="grid-column:1/-1"><i class="fas fa-search"></i><p>검색 결과가 없습니다. 다른 키워드를 시도해 보세요.</p></div>';
+    return;
+  }
+  grid.innerHTML = filtered.map(v => videoCardHTML(v, true)).join('');
+  saveActivityLog('검색', keyword);
+}
+
+/* ============================================================
+   VIDEO CARD HTML
+============================================================ */
+function videoCardHTML(v, wide=false) {
+  const date = v.uploadDate ? v.uploadDate.replace(/-/g,'.') : '';
+  const url  = escHtml(v.url);
+  return `
+    <div class="video-card" onclick="handleVideoClick(event,'${url}','${escHtml(v.title)}')">
+      <div class="thumb-wrap">
+        <img class="thumb" src="${escHtml(v.thumbnail)}" alt="${escHtml(v.title)}" loading="lazy">
+        <div class="thumb-overlay">
+          <div class="play-btn"><i class="fas fa-play" style="margin-left:3px"></i></div>
+        </div>
+      </div>
+      <div class="card-body">
+        <div class="card-title">${escHtml(v.title)}</div>
+        <div class="card-meta">
+          <span class="card-date">${date}</span>
+          <span style="font-size:.72rem;color:var(--green);font-weight:700;">${escHtml(v.category)}</span>
+        </div>
+        ${v.description ? `<div class="card-desc">${escHtml(v.description.slice(0,120))}</div>` : ''}
+      </div>
+      <div class="card-actions">
+        <button class="card-btn primary" onclick="event.stopPropagation();handleVideoClick(event,'${url}','${escHtml(v.title)}')">
+          <i class="fas fa-play"></i> 보기
+        </button>
+        <button class="card-btn" onclick="event.stopPropagation();copyLink('${url}')">
+          <i class="fas fa-link"></i> 복사
+        </button>
+      </div>
+    </div>
+  `;
+}
+function escHtml(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;').replace(/'/g,'&#39;');
+}
+
+/* ============================================================
+   VIDEO CLICK
+============================================================ */
+let watchingVideo = false;
+function handleVideoClick(e, url, title='') {
+  e.preventDefault();
+  if (!isLoggedIn()) { e.stopPropagation(); openAlertModal(); return; }
+  watchingVideo = true;
+  if (logoutTimer) clearTimeout(logoutTimer);
+  if (warnTimer) clearTimeout(warnTimer);
+  const win = window.open(url, '_blank');
+  saveActivityLog('영상보기', title);
+  const poll = setInterval(() => {
+    if (!win || win.closed) { clearInterval(poll); watchingVideo=false; resetLogoutTimer(); }
+  }, 1000);
+}
+function copyLink(url) {
+  const done = () => showToast('🔗 링크가 복사되었습니다.');
+  if (navigator.clipboard?.writeText) navigator.clipboard.writeText(url).then(done).catch(() => legacyCopy(url,done));
+  else legacyCopy(url,done);
+}
+function legacyCopy(text, cb) {
+  const ta = document.createElement('textarea'); ta.value=text;
+  document.body.appendChild(ta); ta.select(); document.execCommand('copy'); ta.remove(); cb();
+}
+
+/* ============================================================
+   SEARCH EVENTS
+============================================================ */
+document.getElementById('searchInput').addEventListener('input', e => {
+  renderSearch(e.target.value);
+  // chip deselect
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  if (!e.target.value) document.querySelector('.chip[data-word=""]')?.classList.add('active');
+});
+document.getElementById('searchInput').addEventListener('keydown', e => {
+  if (e.key==='Enter') renderSearch(e.target.value);
+});
+document.getElementById('chipRow').addEventListener('click', e => {
+  const chip = e.target.closest('.chip');
+  if (!chip) return;
+  document.querySelectorAll('.chip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');
+  const word = chip.dataset.word || '';
+  document.getElementById('searchInput').value = word;
+  renderSearch(word);
+});
+document.getElementById('catFilterRow').addEventListener('click', e => {
+  const chip = e.target.closest('.cat-chip');
+  if (!chip) return;
+  document.querySelectorAll('.cat-chip').forEach(c=>c.classList.remove('active'));
+  chip.classList.add('active');
+  currentCat = chip.dataset.cat;
+  renderBrowseFeed();
+});
+function clearSearchInput() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('clearSearch').style.display = 'none';
+  document.querySelector('.chip[data-word=""]')?.classList.add('active');
+  renderSearch('');
+}
+function focusSearch() {
+  document.getElementById('searchInput').focus();
+  document.getElementById('searchSection').scrollIntoView({ behavior:'smooth' });
+}
+function scrollToFeed() {
+  document.getElementById('mainFeed').scrollIntoView({ behavior:'smooth' });
+}
+
+/* ============================================================
+   MODALS
+============================================================ */
+function openAlertModal() {
+  document.getElementById('alertModal').classList.add('open');
+}
+function closeAlert() {
+  document.getElementById('alertModal').classList.remove('open');
+}
+function closeModal(id) {
+  document.getElementById(id).classList.remove('open');
+}
+document.getElementById('alertModal').addEventListener('click', e => {
+  if(e.target===document.getElementById('alertModal')) closeAlert();
+});
+document.getElementById('estimateModal').addEventListener('click', e => {
+  if(e.target===document.getElementById('estimateModal')) closeModal('estimateModal');
+});
+
+/* ============================================================
+   ESTIMATE
+============================================================ */
+const productList = [
+  { name:'Formula 1 건강한 식사', c:63000, d:47261 },
+  { name:'Formula 2 멀티비타민·무기질 컴플렉스', c:33300, d:24995 },
+  { name:'Formula 3 퍼스널 단백질 파우더', c:65600, d:49619 },
+  { name:'Formula 1 쿠키앤크림맛 번들팩', c:66000, d:49490 },
+  { name:'면역튼튼 알로에겔 세트', c:307900, d:230987 },
+  { name:'마이문 플러스', c:65500, d:49520 },
+  { name:'홍삼 진센 젤', c:187600, d:140688 },
+  { name:'나이트웍스® 비타민 C, E, 엽산', c:113000, d:84783 },
+  { name:'프로레사 듀오', c:202200, d:151639 },
+  { name:'허벌 베버리지 릴렉세이션 티', c:77300, d:58125 },
+  { name:'셀-유-로쓰', c:32800, d:24600 },
+  { name:'키토산 플러스', c:99000, d:74325 },
+  { name:'리프트오프® 오렌지향', c:103000, d:77438 },
+  { name:'트리플 헬스 드링크(10병)', c:61700, d:46300 },
+  { name:'엔-알-지 티', c:34700, d:26000 },
+  { name:'프로틴 바 디럭스', c:58200, d:43837 },
+  { name:'허벌 알로에 겔', c:51300, d:38625 },
+  { name:'액티브 화이버 컴플렉스', c:53000, d:39900 },
+  { name:'프로바이오틱 컴플렉스 플러스', c:85600, d:64400 },
+  { name:'허벌 코큐텐 플러스', c:86100, d:64875 },
+  { name:'허벌라이프라인 오메가-3', c:60700, d:45700 },
+  { name:'감마리놀렌산 플러스', c:94100, d:70875 },
+  { name:'와이즈 케어', c:62800, d:47250 },
+  { name:'피크노® 플러스', c:102700, d:77250 },
+  { name:'콜라겐 뷰티 파우더', c:101200, d:76125 },
+  { name:'허바플렉스 글루코사민', c:97500, d:73425 },
+  { name:'칼슘 플러스 비타민 D', c:35500, d:26700 },
+  { name:'헬씨 아이', c:89200, d:67000 },
+  { name:'셀레늄 플러스', c:34700, d:26000 },
+  { name:'Formula 1 스포츠', c:96400, d:72300 },
+  { name:'리빌드 스트랭쓰', c:156300, d:117207 },
+  { name:'씨알세븐 드라이브', c:57200, d:42918 },
+  { name:'스포츠 프로그램', c:309900, d:232433 },
+  { name:'나이트웍스® 선물세트(2개입)', c:226000, d:169464 },
+  { name:'티 선물세트', c:116400, d:87263 }
+];
+
+function openEstimate() {
+  if (!isLoggedIn()) { openAlertModal(); return; }
+  const head = document.getElementById('estimateHead');
+  const body = document.getElementById('estimateBody');
+  head.innerHTML = `<tr><th>제품명</th><th>소비자가</th><th>디스트리뷰터가</th><th>수량</th><th>소계(소비자)</th><th>소계(회원)</th></tr>`;
+  body.innerHTML = productList.map((p,i) => `
+    <tr>
+      <td>${p.name}</td>
+      <td style="text-align:right">${p.c.toLocaleString()}원</td>
+      <td style="text-align:right">${p.d.toLocaleString()}원</td>
+      <td style="text-align:center"><input type="number" min="0" value="0" data-idx="${i}" oninput="updateEstimate()"></td>
+      <td style="text-align:right" id="ec${i}">0원</td>
+      <td style="text-align:right" id="ed${i}">0원</td>
+    </tr>
+  `).join('');
+  updateEstimate();
+  document.getElementById('estimateModal').classList.add('open');
+}
+function updateEstimate() {
+  let tc=0, td=0;
+  productList.forEach((p,i) => {
+    const qty = Number(document.querySelector(`input[data-idx="${i}"]`)?.value||0);
+    const sc = qty*p.c, sd = qty*p.d;
+    const ec = document.getElementById('ec'+i);
+    const ed = document.getElementById('ed'+i);
+    if(ec) ec.textContent = sc?sc.toLocaleString()+'원':'0원';
+    if(ed) ed.textContent = sd?sd.toLocaleString()+'원':'0원';
+    tc+=sc; td+=sd;
+  });
+  document.getElementById('estimateTotal').innerHTML =
+    `합계: <span style="color:var(--text)">${tc.toLocaleString()}원</span>  ·  회원가: <span>${td.toLocaleString()}원</span>`;
+}
+document.getElementById('estimateBtnNav').onclick = e => { e.preventDefault(); openEstimate(); };
+
+/* ============================================================
+   ACTIVITY LOG
+============================================================ */
+function saveActivityLog(type, extra) {
+  if (!isLoggedIn()) return;
+  const id   = localStorage.getItem('lastLoginId');
+  const name = localStorage.getItem('lastLoginName');
+  if (!id||!name) return;
+  fetch(`https://api.airtable.com/v0/${AT_BASE}/${AT_LOG_TABLE}`, {
+    method:'POST',
+    headers:{ 'Authorization':'Bearer '+AT_KEY, 'Content-Type':'application/json' },
+    body: JSON.stringify({ fields:{ herbalife_id:id, name, activity_type:type, activity_time:new Date().toISOString(), extra_info:extra||'' } })
+  });
+}
+
+/* ============================================================
+   AUTO LOGOUT
+============================================================ */
+let logoutTimer=null, warnTimer=null;
+const LOGOUT_MS = 60*60*1000;
+const WARN_MS   = LOGOUT_MS - 5*60*1000;
+
+function resetLogoutTimer() {
+  if (logoutTimer) clearTimeout(logoutTimer);
+  if (warnTimer) clearTimeout(warnTimer);
+  if (!isLoggedIn()||watchingVideo) return;
+  warnTimer   = setTimeout(showLogoutWarning, WARN_MS);
+  logoutTimer = setTimeout(autoLogout, LOGOUT_MS);
+  document.getElementById('logoutWarning').style.display = 'none';
+}
+function showLogoutWarning() {
+  document.getElementById('logoutWarning').style.display = 'block';
+}
+function autoLogout() {
+  setLogin(false);
+  document.getElementById('logoutWarning').style.display = 'none';
+  showToast('⏰ 1시간 동안 활동이 없어 자동 로그아웃 되었습니다.');
+}
+['click','keydown','touchstart'].forEach(evt => {
+  window.addEventListener(evt, resetLogoutTimer, true);
+});
+
+/* ============================================================
+   TOAST
+============================================================ */
+let toastTimer;
+function showToast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.classList.add('show');
+  if (toastTimer) clearTimeout(toastTimer);
+  toastTimer = setTimeout(()=>t.classList.remove('show'), 3000);
+}
+
+/* ============================================================
+   NAV SCROLL EFFECT
+============================================================ */
+window.addEventListener('scroll', () => {
+  document.getElementById('topNav').classList.toggle('scrolled', window.scrollY > 30);
+});
+
+/* ============================================================
+   INIT
+============================================================ */
+window.addEventListener('DOMContentLoaded', () => {
+  applyAuthVisibility();
+  if (isLoggedIn()) {
+    loadVideos();
+    resetLogoutTimer();
+  }
+});
+</script>
 </body>
 </html>
-
-
-
-
-
-
-
