@@ -1228,28 +1228,32 @@ function renderSearch(keyword) {
 ============================================================ */
 function videoCardHTML(v, wide=false) {
   const date = v.uploadDate ? v.uploadDate.replace(/-/g,'.') : '';
-  const url  = escHtml(v.url);
+  // data-* 속성으로 저장 — 따옴표/특수문자 안전
+  const safeUrl   = v.url.replace(/"/g, '&quot;');
+  const safeTitle = (v.title||'').replace(/"/g, '&quot;');
+  const safeSrc   = (v.thumbnail||'').replace(/"/g, '&quot;');
+  const safeDesc  = v.description ? v.description.slice(0,120).replace(/</g,'&lt;').replace(/>/g,'&gt;') : '';
   return `
-    <div class="video-card" onclick="handleVideoClick(event,'${url}','${escHtml(v.title)}')">
+    <div class="video-card" data-url="${safeUrl}" data-title="${safeTitle}" onclick="cardClick(this)">
       <div class="thumb-wrap">
-        <img class="thumb" src="${escHtml(v.thumbnail)}" alt="${escHtml(v.title)}" loading="lazy">
+        <img class="thumb" src="${safeSrc}" alt="" loading="lazy">
         <div class="thumb-overlay">
           <div class="play-btn"><i class="fas fa-play" style="margin-left:3px"></i></div>
         </div>
       </div>
       <div class="card-body">
-        <div class="card-title">${escHtml(v.title)}</div>
+        <div class="card-title">${safeTitle}</div>
         <div class="card-meta">
           <span class="card-date">${date}</span>
-          <span style="font-size:.72rem;color:var(--green);font-weight:700;">${escHtml(v.category)}</span>
+          <span style="font-size:.72rem;color:var(--green);font-weight:700;">${v.category||''}</span>
         </div>
-        ${v.description ? `<div class="card-desc">${escHtml(v.description.slice(0,120))}</div>` : ''}
+        ${safeDesc ? `<div class="card-desc">${safeDesc}</div>` : ''}
       </div>
       <div class="card-actions">
-        <button class="card-btn primary" onclick="event.stopPropagation();handleVideoClick(event,'${url}','${escHtml(v.title)}')">
+        <button class="card-btn primary" onclick="event.stopPropagation();cardPlay(this)">
           <i class="fas fa-play"></i> 보기
         </button>
-        <button class="card-btn" onclick="event.stopPropagation();copyLink('${url}')">
+        <button class="card-btn" onclick="event.stopPropagation();cardCopy(this)">
           <i class="fas fa-link"></i> 복사
         </button>
       </div>
@@ -1263,6 +1267,23 @@ function escHtml(s) {
 /* ============================================================
    VIDEO CLICK
 ============================================================ */
+// data-* 기반 클릭 헬퍼 — 인라인 onclick 따옴표 문제 완전 해결
+function cardClick(el) {
+  const url   = el.dataset.url;
+  const title = el.dataset.title;
+  handleVideoClick({ preventDefault:()=>{} }, url, title);
+}
+function cardPlay(el) {
+  const card  = el.closest('.video-card');
+  const url   = card.dataset.url;
+  const title = card.dataset.title;
+  handleVideoClick({ preventDefault:()=>{} }, url, title);
+}
+function cardCopy(el) {
+  const card = el.closest('.video-card');
+  copyLink(card.dataset.url);
+}
+
 let watchingVideo = false;
 function handleVideoClick(e, url, title='') {
   e.preventDefault();
