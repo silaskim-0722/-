@@ -1267,35 +1267,40 @@ function escHtml(s) {
 /* ============================================================
    VIDEO CLICK
 ============================================================ */
-// data-* 기반 클릭 헬퍼 — 인라인 onclick 따옴표 문제 완전 해결
+// data-* 기반 클릭 헬퍼
+// 핵심: window.open은 반드시 실제 사용자 클릭 컨텍스트에서 직접 호출해야 팝업 차단 안됨
 function cardClick(el) {
+  if (!isLoggedIn()) { openAlertModal(); return; }
   const url   = el.dataset.url;
   const title = el.dataset.title;
-  handleVideoClick({ preventDefault:()=>{} }, url, title);
+  openVideo(url, title);
 }
 function cardPlay(el) {
+  if (!isLoggedIn()) { openAlertModal(); return; }
   const card  = el.closest('.video-card');
-  const url   = card.dataset.url;
-  const title = card.dataset.title;
-  handleVideoClick({ preventDefault:()=>{} }, url, title);
+  openVideo(card.dataset.url, card.dataset.title);
 }
 function cardCopy(el) {
   const card = el.closest('.video-card');
   copyLink(card.dataset.url);
 }
-
-let watchingVideo = false;
-function handleVideoClick(e, url, title='') {
-  e.preventDefault();
-  if (!isLoggedIn()) { e.stopPropagation(); openAlertModal(); return; }
+// 실제로 영상 여는 함수 — 팝업 차단 방지: window.open 직접 호출
+function openVideo(url, title) {
   watchingVideo = true;
   if (logoutTimer) clearTimeout(logoutTimer);
-  if (warnTimer) clearTimeout(warnTimer);
+  if (warnTimer)   clearTimeout(warnTimer);
+  saveActivityLog('영상보기', title || '');
   const win = window.open(url, '_blank');
-  saveActivityLog('영상보기', title);
   const poll = setInterval(() => {
     if (!win || win.closed) { clearInterval(poll); watchingVideo=false; resetLogoutTimer(); }
   }, 1000);
+}
+
+let watchingVideo = false;
+function handleVideoClick(e, url, title='') {
+  if (e && e.preventDefault) e.preventDefault();
+  if (!isLoggedIn()) { openAlertModal(); return; }
+  openVideo(url, title);
 }
 function copyLink(url) {
   const done = () => showToast('🔗 링크가 복사되었습니다.');
